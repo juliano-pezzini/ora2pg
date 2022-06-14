@@ -2,17 +2,22 @@ version: '3'
 services:
 
   ora2pg:
-    build:
-      context: .
-#    image: georgmoser/ora2pg
+    #build:
+    #  context: .
+    image: julianopezzini/ora2pg
+    #command: ora2pg --debug --namespace TASY --conf config/ora2pg.conf --type TABLE --allow 'TABLE[NICU.*]'
+    #command: ora2pg --debug --namespace COMERCIAL --conf config/ora2pg.conf --type SHOW_REPORT --estimate_cost --dump_as_html 2> report/migration_report.html
+    #command: ora2pg --project_base /project/ --init_project test_tasy
+    command: bash -c "echo '127.0.1.1 ${HOSTNAME}' >> /etc/hosts &&  cd /project/test_tasy/ && ./export_schema.sh"
     container_name: ora2pg
     network_mode: "host"
     volumes:
       - ora2pg-data:/data
       - ./config:/config
+      - ./report:/report
+      - ./project:/project
     environment:
       - CONFIG_LOCATION=config/ora2pg.conf
-
 
 volumes:
   ora2pg-data:
