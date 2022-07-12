@@ -1,0 +1,17 @@
+ora2pg  | INFO: CONFIG_LOCATION variable detected: 'config/ora2pg.conf'
+ora2pg  | INFO: No OUTPUT_LOCATION variable provided. Using default '/data'
+ora2pg  | INFO: No ORA_HOST variable provided. Using value of 'ORACLE_DSN' from 'config/ora2pg.conf'
+ora2pg  | INFO: No ORA_USER variable provided. Using value of 'ORACLE_USER' from  'config/ora2pg.conf'
+ora2pg  | INFO: No ORA_PWD variable provided. Using value of 'ORACLE_PWD' from  'config/ora2pg.conf'
+ora2pg  | INFO: executing: 'ora2pg --debug -p -t TABLESPACE -o tablespace.sql -b /project/schema/tablespaces -c /config/ora2pg.conf'
+ora2pg  | [2022-07-09 02:36:35] Ora2Pg version: 23.1
+ora2pg  | [2022-07-09 02:36:35] Export type: TABLESPACE
+ora2pg  | [2022-07-09 02:36:35] Geometry export type: INTERNAL
+ora2pg  | [2022-07-09 02:36:35] ORACLE_HOME = /usr/local/oracle/10g
+ora2pg  | [2022-07-09 02:36:35] NLS_LANG = AMERICAN_AMERICA.AL32UTF8
+ora2pg  | [2022-07-09 02:36:35] NLS_NCHAR = AL32UTF8
+ora2pg  | [2022-07-09 02:36:35] Trying to connect to database: dbi:Oracle:host=srv-dbora-03.whebdc.com.br;service_name=DEV_1815;port=1521
+ora2pg  | [2022-07-09 02:36:35] Isolation level: SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+ora2pg  | [2022-07-09 02:36:35] Retrieving tablespaces information...
+ora2pg  | [2022-07-09 02:38:00] Add tablespaces definition...
+ora2pg  | [2022-07-09 02:38:01] Dumping tablespace alter indexes to one separate file : TBSP_INDEXES_tablespace.sql

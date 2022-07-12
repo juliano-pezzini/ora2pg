@@ -5,19 +5,43 @@ services:
     #build:
     #  context: .
     image: julianopezzini/ora2pg
-    #command: ora2pg --debug --namespace TASY --conf config/ora2pg.conf --type TABLE --allow 'TABLE[NICU.*]'
     #command: ora2pg --debug --namespace COMERCIAL --conf config/ora2pg.conf --type SHOW_REPORT --estimate_cost --dump_as_html 2> report/migration_report.html
-    #command: ora2pg --project_base /project/ --init_project test_tasy
-    command: bash -c "echo '127.0.1.1 ${HOSTNAME}' >> /etc/hosts &&  cd /project/test_tasy/ && ./export_schema.sh"
+    #command: ora2pg --project_base /project/ --init_project tasy
+    #command: bash -c "echo '127.0.1.1 ${HOSTNAME}' >> /etc/hosts &&  cd /project/tasy/ && ./export_schema.sh"
+
+    #ok command: ora2pg --debug -p -t SEQUENCE -o sequence.sql -b /project/schema/sequences -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t TABLE -o table.sql -b /project/schema/tables -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t VIEW -o view.sql -b /project/schema/views -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t GRANT -o grant.sql -b /project/schema/grants -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t TRIGGER -o trigger.sql -b /project/schema/triggers -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t FUNCTION -o function.sql -b /project/schema/functions -c /config/ora2pg.conf
+    command: ora2pg --debug -p -t PROCEDURE -o procedure.sql -b /project/schema/procedures -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t TABLESPACE -o tablespace.sql -b /project/schema/tablespaces -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t PARTITION -o partition.sql -b /project/schema/partitions -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t TYPE -o type.sql -b /project/schema/types -c /config/ora2pg.conf
+    #command: ora2pg --debug -p -t MVIEW -o mview.sql -b /project/schema/mviews -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t DBLINK -o dblink.sql -b /project/schema/dblinks -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t SYNONYM -o synonym.sql -b /project/schema/synonyms -c /config/ora2pg.conf
+    #ok command: ora2pg --debug -p -t DIRECTORY -o directory.sql -b /project/schema/directories -c /config/ora2pg.conf
+                 
+    # ora2pg -t PACKAGE -o package.sql -b /project/sources/packages -c /config/ora2pg.conf
+    # ora2pg -t VIEW -o view.sql -b /project/sources/views -c /config/ora2pg.conf
+    # ora2pg -t TRIGGER -o trigger.sql -b /project/sources/triggers -c /config/ora2pg.conf
+    # ora2pg -t FUNCTION -o function.sql -b /project/sources/functions -c /config/ora2pg.conf
+    # ora2pg -t PROCEDURE -o procedure.sql -b /project/sources/procedures -c /config/ora2pg.conf
+    # ora2pg -t PARTITION -o partition.sql -b /project/sources/partitions -c /config/ora2pg.conf
+    # ora2pg -t TYPE -o type.sql -b /project/sources/types -c /config/ora2pg.conf
+    # ora2pg -t MVIEW -o mview.sql -b /project/sources/mviews -c /config/ora2pg.conf
+
     container_name: ora2pg
     network_mode: "host"
     volumes:
       - ora2pg-data:/data
       - ./config:/config
       - ./report:/report
-      - ./project:/project
+      - ./project/tasy/:/project
     environment:
       - CONFIG_LOCATION=config/ora2pg.conf
 
 volumes:
-  ora2pg-data:
+  ora2pg-data: 
