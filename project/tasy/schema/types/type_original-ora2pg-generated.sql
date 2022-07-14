@@ -74,13 +74,13 @@ NM_PROCEDURE		varchar(255),
 );
 
 -- Unsupported, please edit to match PostgreSQL syntax
-CREATE OR REPLACE TYPE             t_param_integracao                                          FORCE AS OBJECT
+CREATE OR REPLACE TYPE t_param_integracao FORCE AS OBJECT
 (
  nr_sequencia  NUMBER(10),
  ds_parametros VARCHAR2(4000)
 );
 -- Unsupported, please edit to match PostgreSQL syntax
-CREATE OR REPLACE TYPE             tipo_cubo                                          force as object
+CREATE OR REPLACE TYPE tipo_cubo force as object
 (
 	ie_tipo_coluna	varchar2(1),
 	vl_coluna_1	varchar2(100),
