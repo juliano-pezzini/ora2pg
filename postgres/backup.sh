@@ -1,0 +1,2 @@
+# Not tested, just to store the pg_dump command
+docker exec -it 8da3d90726b3 pg_dump --file /var/lib/postgresql/data/backups/2022-july-15.backup.zip --host "192.168.203.16" --port "5432" --username "postgres" --password --verbose --role postgres --format=c --blobs

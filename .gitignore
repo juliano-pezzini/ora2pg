@@ -27,4 +27,5 @@ nbdist/
 .nb-gradle/
 
 notes.md
-config/ora2pg-*.conf
+
+postgres/data/*
