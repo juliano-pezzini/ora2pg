@@ -24,14 +24,20 @@ services:
     #ok command: ora2pg --debug -p -t SYNONYM -o synonym.sql -b /project/schema/synonyms -c /config/ora2pg.conf
     #ok command: ora2pg --debug -p -t DIRECTORY -o directory.sql -b /project/schema/directories -c /config/ora2pg.conf
                  
-    # ora2pg -t PACKAGE -o package.sql -b /project/sources/packages -c /config/ora2pg.conf
-    # ora2pg -t VIEW -o view.sql -b /project/sources/views -c /config/ora2pg.conf
-    # ora2pg -t TRIGGER -o trigger.sql -b /project/sources/triggers -c /config/ora2pg.conf
-    # ora2pg -t FUNCTION -o function.sql -b /project/sources/functions -c /config/ora2pg.conf
-    # ora2pg -t PROCEDURE -o procedure.sql -b /project/sources/procedures -c /config/ora2pg.conf
-    # ora2pg -t PARTITION -o partition.sql -b /project/sources/partitions -c /config/ora2pg.conf
-    # ora2pg -t TYPE -o type.sql -b /project/sources/types -c /config/ora2pg.conf
-    # ora2pg -t MVIEW -o mview.sql -b /project/sources/mviews -c /config/ora2pg.conf
+    #ok command: ora2pg -t PACKAGE -o package.sql -b /project/sources/packages -c /config/ora2pg.conf
+    # command: ora2pg -t VIEW -o view.sql -b /project/sources/views -c /config/ora2pg.conf
+    # command: ora2pg -t TRIGGER -o trigger.sql -b /project/sources/triggers -c /config/ora2pg.conf
+    # command: ora2pg -t FUNCTION -o function.sql -b /project/sources/functions -c /config/ora2pg.conf
+    # command: ora2pg -t PROCEDURE -o procedure.sql -b /project/sources/procedures -c /config/ora2pg.conf
+    # command: ora2pg -t PARTITION -o partition.sql -b /project/sources/partitions -c /config/ora2pg.conf
+    # command: ora2pg -t TYPE -o type.sql -b /project/sources/types -c /config/ora2pg.conf
+    # command: ora2pg -t MVIEW -o mview.sql -b /project/sources/mviews -c /config/ora2pg.conf
+
+    # trying to fix the types.sql syntax after some fixes on the file
+    # command: ora2pg -t TYPE -i /input/types_ora2pg.sql -o type.sql -b /project/sources/types -c /config/ora2pg.conf
+
+    # move the data
+    # command: ora2pg -t COPY -c /config/ora2pg.conf --pg_dsn "dbi:Pg:dbname=postgres;host=192.168.203.14;port=5432" --pg_user postgres --pg_pwd aloisk --jobs 10 --copies 10
 
     container_name: ora2pg
     network_mode: "host"
