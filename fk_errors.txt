@@ -1,0 +1,164 @@
+psql:table.sql:502195: ERROR:  foreign key constraint "acpro_depmed_fk" cannot be implemented
+DETAIL:  Key columns "cd_departament" and "cd_departamento" are of incompatible types: real and integer.
+psql:table.sql:503157: ERROR:  foreign key constraint "agehoce_agehoca_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_agenda" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:503192: ERROR:  foreign key constraint "agehora_schcywe_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_schedule_cycle" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:507383: ERROR:  foreign key constraint "bncdep_movtrf2_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_movto_tr_fin_dep" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:507515: ERROR:  foreign key constraint "bncresg_movtrf2_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_movto_tr_fin_resg" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:507682: ERROR:  foreign key constraint "bai_cpohemo_fk" cannot be implemented
+DETAIL:  Key columns "cd_cpoe_item_seq" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:508182: ERROR:  foreign key constraint "cadhospref_susmure_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_municipio_regiao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:509633: ERROR:  foreign key constraint "cihdenf_timocih_fk" cannot be implemented
+DETAIL:  Key columns "ie_motivo_definicao" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:511524: ERROR:  foreign key constraint "comaudord_manorse_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_ordem_serv" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:516854: ERROR:  foreign key constraint "ctbpertit_hispadr_fk" cannot be implemented
+DETAIL:  Key columns "cd_historico" and "cd_historico" are of incompatible types: numeric and bigint.
+psql:table.sql:518016: ERROR:  foreign key constraint "depset_depmed_fk" cannot be implemented
+DETAIL:  Key columns "cd_departamento" and "cd_departamento" are of incompatible types: real and integer.
+psql:table.sql:519273: ERROR:  foreign key constraint "drgproc_procedi_fk" cannot be implemented
+DETAIL:  Key columns "cd_procedimento" and "cd_procedimento" are of incompatible types: numeric and bigint.
+psql:table.sql:519276: ERROR:  foreign key constraint "drgper_procedi_fk" cannot be implemented
+DETAIL:  Key columns "cd_procedimento" and "cd_procedimento" are of incompatible types: numeric and bigint.
+psql:table.sql:526264: ERROR:  foreign key constraint "grgprpa_propaci_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_proc" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:526266: ERROR:  foreign key constraint "grgprpa_propart_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_proc" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:526582: ERROR:  foreign key constraint "hchimeq_hcequp_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_hc_equipamento" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:528680: ERROR:  foreign key constraint "impacprot_pedexex_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_pedido_externo" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:531675: ERROR:  foreign key constraint "mancofu_funcao_fk" cannot be implemented
+DETAIL:  Key columns "cd_funcao" and "cd_funcao" are of incompatible types: numeric and integer.
+psql:table.sql:535942: ERROR:  foreign key constraint "movtrfi_bcoapl_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_aplicacao" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:537183: ERROR:  foreign key constraint "notcrehis_notcred_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_nota_credito" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:538541: ERROR:  foreign key constraint "oeci_oecv_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_voucher" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:539173: ERROR:  foreign key constraint "onremat_matfami_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_familia" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:544814: ERROR:  foreign key constraint "pfcsaddr_pfcscont_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_contact" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544851: ERROR:  foreign key constraint "pfcscont_pfcshuna_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_human_name" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544867: ERROR:  foreign key constraint "pfcsdevice_pfcslocal_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_location" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:544872: ERROR:  foreign key constraint "pfcsdevnot_pfcsdevice_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_device" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544875: ERROR:  foreign key constraint "pfcsenc_pfcsorga_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_organization" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544888: ERROR:  foreign key constraint "pfcshuna_pfcscont_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_contact" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544902: ERROR:  foreign key constraint "pfcslocal_pfcsaddr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_address" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544922: ERROR:  foreign key constraint "pfcsorga_pfcsaddr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_address" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544928: ERROR:  foreign key constraint "pfcspat_pfcsorga_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_organization" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544943: ERROR:  foreign key constraint "pfcspid_pfcsdevice_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_device" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544945: ERROR:  foreign key constraint "pfcspid_pfcslocal_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_location" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544949: ERROR:  foreign key constraint "pfcspid_pfcsorga_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_organization" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544953: ERROR:  foreign key constraint "pfcspid_pfcspract_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_practitioner" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544955: ERROR:  foreign key constraint "pfcspid_pfcsservr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_service_request" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544961: ERROR:  foreign key constraint "pfcs_lohis_pfcsorga_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_organization" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:544980: ERROR:  foreign key constraint "pfcsservr_pfcslocal_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_location" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:545971: ERROR:  foreign key constraint "padcbr_padclt_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_ar_desp_contab" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:547122: ERROR:  foreign key constraint "plscome_plspres_fk6" cannot be implemented
+DETAIL:  Key columns "nr_seq_prestador_exec_princ" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:548298: ERROR:  foreign key constraint "pcpregr_plsspretp_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_ret_pacote" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:548984: ERROR:  foreign key constraint "plscoex_plsplan_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_plano" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:549300: ERROR:  foreign key constraint "plscrirexc_plspres_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_prestador" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:549302: ERROR:  foreign key constraint "plscrirexc_plsprgp_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_grupo_prestador" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:549307: ERROR:  foreign key constraint "plscrirecv_plsrelr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_regra_recalculo" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:550625: ERROR:  foreign key constraint "plsexecc_plspres_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_prestador_exec" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:550661: ERROR:  foreign key constraint "plsecl_plscome_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:550663: ERROR:  foreign key constraint "plsecl_plsecguia_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_exec_cir_guia" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:550674: ERROR:  foreign key constraint "plsecbio_cbosaud_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_cbo_saude" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:550760: ERROR:  foreign key constraint "plsfatpro_plsltprepg_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_lote_serv_pre_pgto" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:554806: ERROR:  foreign key constraint "plspacanx_plspacc_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_pacote_composicao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:556990: ERROR:  foreign key constraint "plsprob_plsvies_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_vinculo_estip" and "nr_sequencia" are of incompatible types: double precision and bigint.
+psql:table.sql:557312: ERROR:  foreign key constraint "plsrjcs_plstapr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tabela" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:559528: ERROR:  foreign key constraint "plsrepm_plstpco_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tipo_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:559658: ERROR:  foreign key constraint "plsreprp_plstpco_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tipo_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:559755: ERROR:  foreign key constraint "plsreps_plstpco_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tipo_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:560428: ERROR:  foreign key constraint "plsrequ_mprprog_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_mprev_programa" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561416: ERROR:  foreign key constraint "plssispacl_plsspreq_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_requisicao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561420: ERROR:  foreign key constraint "plsspretp_plsspreq_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_requisicao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561423: ERROR:  foreign key constraint "plsspretpi_plsspretp_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_retorno" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561426: ERROR:  foreign key constraint "plsspretpr_plsspretp_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_retorno" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561825: ERROR:  foreign key constraint "plstedctab_plssegu_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_segurado" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561827: ERROR:  foreign key constraint "plstedctab_seqlote_idx1" cannot be implemented
+DETAIL:  Key columns "nr_seq_lote_ted_cta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561830: ERROR:  foreign key constraint "plstedctad_plscome_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561832: ERROR:  foreign key constraint "plstedctad_plspres_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_prest_exec" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561834: ERROR:  foreign key constraint "plstedctad_plstedctab_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_lote_ted_benef" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561939: ERROR:  foreign key constraint "plstpctapr_mprprog_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_mprev_programa" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:561941: ERROR:  foreign key constraint "plstpctapr_plstpco_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tipo_conta" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:562105: ERROR:  foreign key constraint "plstisstpd_plsveti_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_versao_tiss" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:565413: ERROR:  foreign key constraint "mimsprod_subdat_fk9" cannot be implemented
+DETAIL:  Key columns "section" and "section" are of incompatible types: numeric and bigint.
+psql:table.sql:567697: ERROR:  foreign key constraint "pnse_plsprpar_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_proc_partic" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567767: ERROR:  foreign key constraint "ptupctinc_ptupaco_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_ptu_pacote" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567769: ERROR:  foreign key constraint "ptupctinc_ptupacr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_pacote_reg" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567771: ERROR:  foreign key constraint "ptupctinc_ptupapr_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_pacote_prest" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567773: ERROR:  foreign key constraint "ptupctinc_ptupase_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_pacote_servico" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567777: ERROR:  foreign key constraint "ptupacr_plspata_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_tipo_acomodacao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:567780: ERROR:  foreign key constraint "ptupase_plspacc_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_composicao" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:577598: ERROR:  foreign key constraint "reprema_matfami_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_familia" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:579942: ERROR:  foreign key constraint "sanrefp_relator_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_relatorio" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:580165: ERROR:  foreign key constraint "schcyc_agenda_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_agenda" and "cd_agenda" are of incompatible types: numeric and bigint.
+psql:table.sql:580166: ERROR:  foreign key constraint "schcywe_schcyc_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_schedule_cycle" and "nr_sequencia" are of incompatible types: numeric and bigint.
+psql:table.sql:589646: ERROR:  foreign key constraint "wpareladet_wplsrelac_fk" cannot be implemented
+DETAIL:  Key columns "nr_seq_rel_acomp" and "nr_sequencia" are of incompatible types: numeric and bigint.
