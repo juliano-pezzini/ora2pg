@@ -1,0 +1,2 @@
+# Not tested, just to store the pg_restore command
+docker exec -it 8da3d90726b3 pg_restore -h localhost -p 5432 -U postgres -d postgres -v /var/lib/postgresql/data/backups/2022-july-15.backup.zip --verbose
