@@ -1,6 +1,7 @@
 FROM perl:slim
 
 ARG ORA2PG_VERSION=23.1
+ARG PROXY_URL=http://jpezzini:3ifFjhBYWov@192.168.253.107:3128
 
 # ugly fix for "update-alternatives" missing directories in slim image
 RUN mkdir -p /usr/share/man/man1 &&\
@@ -39,17 +40,22 @@ ENV LD_LIBRARY_PATH=/usr/lib/oracle/12.2/client64/lib
 ENV PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/oracle/12.2/client64/bin
 
 # Install DBI module with Postgres, Oracle and Compress::Zlib module
-RUN cpan install Test::NoWarnings &&\
+RUN export http_proxy=$PROXY_URL &&\
+    export https_proxy=$PROXY_URL &&\
+    cpan install Test::NoWarnings &&\
     cpan install DBI &&\
-    cpan install DBD::Pg &&\
+    cpanm install DBD::Pg &&\
     cpan install Bundle::Compress::Zlib &&\
     cpanm install DBD::Oracle@1.82
 
 # Install ora2pg
-RUN curl -L -o /tmp/ora2pg.zip https://github.com/darold/ora2pg/archive/v$ORA2PG_VERSION.zip &&\
-    (cd /tmp && unzip ora2pg.zip && rm -f ora2pg.zip) &&\
-    mv /tmp/ora2pg* /tmp/ora2pg &&\
-    (cd /tmp/ora2pg && perl Makefile.PL && make && make install)
+# RUN curl -L -o /tmp/ora2pg.zip https://github.com/darold/ora2pg/archive/v$ORA2PG_VERSION.zip &&\
+#     (cd /tmp && unzip ora2pg.zip && rm -f ora2pg.zip) &&\
+#     mv /tmp/ora2pg* /tmp/ora2pg &&\
+#     (cd /tmp/ora2pg && perl Makefile.PL && make && make install)
+
+COPY /ora2pg-23.1 /tmp/ora2pg
+RUN (cd /tmp/ora2pg && perl Makefile.PL && make && make install)
 
 # config directory
 RUN mkdir /config

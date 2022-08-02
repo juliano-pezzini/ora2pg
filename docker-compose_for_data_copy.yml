@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  ora2pg:
+    build:
+      context: .
+
+    # Copy the data
+    command: ora2pg --debug -t COPY -c /config/ora2pg.conf --pg_dsn "dbi:Pg:dbname=postgres;host=192.168.203.17;port=5432" --pg_user postgres --pg_pwd aloisk
+
+    container_name: ora2pg
+    network_mode: "host"
+    volumes:
+      - ora2pg-data:/data
+      - ./config:/config
+      - ./report:/report
+      - ./project/tasy/:/project
+    environment:
+      - CONFIG_LOCATION=config/ora2pg.conf
+
+volumes:
+  ora2pg-data: 
