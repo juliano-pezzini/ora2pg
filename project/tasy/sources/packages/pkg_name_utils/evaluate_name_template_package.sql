@@ -4,36 +4,29 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.evaluate_name_template (template text, bindings text) RETURNS varchar AS $body$
 DECLARE
-
-
-	splitted	split_table;
-	splitted2	split_table;
+	splitted	text[];
+	splitted2	text[];
 	evaluated	varchar(2000);
 BEGIN
 	/*Not gonna be using template engine for now*/
-
-
 	--evaluated := evaluate_template(template, bindings);
 
 	splitted := pkg_name_utils.split(bindings,';');
 	evaluated := template;
-	for i in 1 .. splitted.count
+	for i in 1 .. array_length(splitted, 1)
 	loop
-		splitted2 := pkg_name_utils.split(splitted(i),'=');
-		if (splitted2.last = 2) then
-			evaluated	:= replace(evaluated, '${' || splitted2(1) || '.toUpperCase()}', upper(splitted2(2)));
-			evaluated	:= replace(evaluated, '${' || splitted2(1) || '.toLowerCase()}', lower(splitted2(2)));
-			evaluated	:= replace(evaluated, '${' || splitted2(1) || '.capitalize()}', initcap(splitted2(2)));
-			evaluated	:= replace(evaluated, '${' || splitted2(1) || '.capitalizeFirstLetter()}', upper(substr(splitted2(2), 0, 1)));
-			if ((splitted2(2) IS NOT NULL AND (splitted2(2))::text <> '')) then
-				evaluated	:= replace(evaluated, '${' || splitted2(1) || '?' || splitted2(1) || '.take(1)+".":""}', substr(splitted2(2),1,1));
+		splitted2 := pkg_name_utils.split(splitted[i],'=');
+		if (array_upper(splitted2,1) = 2) then
+			evaluated	:= replace(evaluated, '${' || splitted2[1] || '.toUpperCase()}', upper(splitted2[2]));
+			evaluated	:= replace(evaluated, '${' || splitted2[1] || '.toLowerCase()}', lower(splitted2[2]));
+			evaluated	:= replace(evaluated, '${' || splitted2[1] || '.capitalize()}', initcap(splitted2[2]));
+			evaluated	:= replace(evaluated, '${' || splitted2[1] || '.capitalizeFirstLetter()}', upper(substr(splitted2[2], 0, 1)));
+			if ((splitted2[2] IS NOT NULL AND (splitted2[2])::text <> '')) then
+				evaluated	:= replace(evaluated, '${' || splitted2[1] || '?' || splitted2[1] || '.take(1)+".":""}', substr(splitted2[2],1,1));
 			end if;
-			evaluated	:= replace(evaluated, '${' || splitted2(1) || '}', splitted2(2));
+			evaluated	:= replace(evaluated, '${' || splitted2[1] || '}', splitted2[2]);
 		end if;
 	end loop;
 

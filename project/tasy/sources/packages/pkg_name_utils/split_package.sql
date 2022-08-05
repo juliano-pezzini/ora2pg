@@ -4,29 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-CREATE OR REPLACE FUNCTION pkg_name_utils.split ( list text, delimiter text default ',') RETURNS SPLIT_TABLE AS $body$
-DECLARE
-
-	splitted	split_table := split_table();
-	i 			integer := 0;
-	list_w 		varchar(512) := list;
-
+CREATE OR REPLACE FUNCTION pkg_name_utils.split ( list text, delimiter text default ',') RETURNS text[] AS $body$
 BEGIN
-	loop
-	i := position(delimiter in list_w);
-	if i > 0 then
-		splitted.extend(1);
-		splitted(splitted.last) := substr(list_w, 1, i - 1);
-		list_w := substr(list_w, i + length(delimiter));
-	else
-		splitted.extend(1);
-		splitted(splitted.last) := list_w;
-		return splitted;
-	end if;
-	end loop;
+	return string_to_array(list, delimiter);
 end;
 
 
