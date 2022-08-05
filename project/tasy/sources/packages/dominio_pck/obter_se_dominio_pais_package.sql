@@ -4,26 +4,32 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION dominio_pck.obter_se_dominio_pais ( cd_dominio_p bigint, vl_dominio_p text, cd_pais_p bigint) RETURNS varchar AS $body$
 DECLARE
 
 	qt_registro_w	bigint;
+	vetor_w jsonb;
+	new_value jsonb;
 	chave_w	varchar(100);
-	
+	raw_value text;
+	ie_exibir_w text;
 BEGIN
 	chave_w		:= cd_dominio_p||'_'||vl_dominio_p||'_'||cd_pais_p;
 	
-	if (current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais.exists(chave_w)) then
-		return current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].ie_exibir;
+	raw_value := current_setting('dominio_pck.dominio_pais_w', true);
+	
+	if (raw_value is not null and raw_value <> '') then
+		vetor_w := current_setting('dominio_pck.dominio_pais_w', true)::jsonb;
+		if (vetor_w ? chave_w) then
+			ie_exibir_w := (vetor_w ->> chave_w);
+		end if;
+	end if;
+	
+	if (ie_exibir_w IS NOT NULL AND ie_exibir_w::text <> '') then
+		return ie_exibir_w;
 	else
-		current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].cd_dominio		:= cd_dominio_p;
-		current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].vl_dominio		:= vl_dominio_p;
-		current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].cd_pais			:= cd_pais_p;	
-		current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].ie_exibir		:= 'S';
-		
+		ie_exibir_w := 'S';
+
 		select	count(1)
 		into STRICT	qt_registro_w
 		from	valor_dominio_pais
@@ -40,12 +46,20 @@ BEGIN
 			and	cd_pais 	= cd_pais_p;
 			
 			if (qt_registro_w	= 0) then
-				current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].ie_exibir		:= 'N';
+				ie_exibir_w := 'N';
 			end if;
 			
 		end if;
 		
-		return current_setting('dominio_pck.dominio_pais_w')::vetorDominioPais[chave_w].ie_exibir;
+		new_value = jsonb_build_object(chave_w, ie_exibir_w);
+		if (vetor_w is null) then
+			vetor_w := new_value;
+		else
+			vetor_w := vetor_w || new_value;
+		end if;
+		perform set_config('dominio_pck.dominio_pais_w', vetor_w::text, false);
+		
+		return ie_exibir_w;
 	end if;
 	
 	return null;

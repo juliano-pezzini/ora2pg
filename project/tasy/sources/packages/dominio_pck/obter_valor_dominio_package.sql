@@ -25,7 +25,7 @@ BEGIN
 		if (raw_value is not null and raw_value <> '') then
 			vetor_w := current_setting('dominio_pck.vetor_w', true)::jsonb;
 			if (vetor_w ? chave_w) then
-				ds_valor_dominio_w := (vetor_w -> chave_w);
+				ds_valor_dominio_w := (vetor_w ->> chave_w);
 			end if;
 		end if;
 		
