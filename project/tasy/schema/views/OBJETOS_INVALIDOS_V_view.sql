@@ -8,7 +8,7 @@ CREATE OR REPLACE VIEW objetos_invalidos_v (ds_comando, ds_tipo, nm_objeto, nr_o
 	substr(object_type,1,15) ds_tipo,
 	substr(object_name,1,40) nm_objeto,
 	obter_ordem_Objeto(object_type) nr_ordem
-FROM USER_OBJECTS
+FROM oracle.USER_OBJECTS
 WHERE OBJECT_TYPE IN ('PROCEDURE', 'VIEW', 'TRIGGER', 'PACKAGE', 'FUNCTION')
 AND STATUS = 'INVALID'
 
@@ -18,7 +18,7 @@ SELECT 'ALTER PACKAGE '||OBJECT_NAME||' COMPILE BODY;' ds_comando,
 	substr(object_type,1,15) ds_tipo,
 	substr(object_name,1,40) nm_objeto,
 	obter_ordem_Objeto(object_type) nr_ordem
-FROM USER_OBJECTS
+FROM oracle.USER_OBJECTS
 WHERE OBJECT_TYPE in ('PACKAGE BODY')
 AND STATUS = 'INVALID';
 

@@ -4,23 +4,17 @@
 
 SET client_encoding TO 'UTF8';
 
-CREATE OR REPLACE VIEW usuario_conectado_v (inst_id, sid, username, status, osuser, machine, terminal, program, type, ds_form, ds_funcao, nm_usuario, lockwait, logon_time, "serial#") AS select
-	INST_ID,
-	SID,
-	USERNAME,
-	STATUS,
-	OSUSER,
-	MACHINE,
-	TERMINAL,
-	PROGRAM,
-	TYPE,
-	MODULE ds_form,
-	b.ds_funcao,
-	ACTION nm_usuario,
-	LOCKWAIT,
-	LOGON_TIME,
-	SERIAL#
-FROM gv$session a, substr(a
-LEFT OUTER JOIN funcao b ON (substr(a.module,7,50) = b.ds_form)
-WHERE lower(osuser) not like 'oracle%' and lower(a.program) not like 'oracle%';
+CREATE OR REPLACE VIEW usuario_conectado_v (pid, username, state, datname, client_hostname, client_addr, application_name, xact_start) AS 
+select
+	pID,
+	USENAME USERNAME,
+	STATE,
+	datname, --?? Not sure if this is the one.
+	client_hostname, 
+	client_addr,
+	application_name,
+	-- b.ds_funcao, > here we could try to connect funcao.ds_funcao to pg_stat_activity.application_name 
+	xact_start
+FROM pg_stat_activity a;
 
+select * from usuario_conectado_v;
