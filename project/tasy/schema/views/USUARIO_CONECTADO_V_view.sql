@@ -4,15 +4,15 @@
 
 SET client_encoding TO 'UTF8';
 
-CREATE OR REPLACE VIEW usuario_conectado_v (pid, username, state, datname, client_hostname, client_addr, application_name, xact_start) AS 
+CREATE OR REPLACE VIEW usuario_conectado_v (pid, username, state, osuser, client_hostname, machine, program, xact_start) AS 
 select
 	pID,
 	USENAME USERNAME,
 	STATE,
-	datname, --?? Not sure if this is the one.
+	datname osuser, --?? Not sure if this is the one.
 	client_hostname, 
-	client_addr,
-	application_name,
+	client_addr machine,
+	application_name program,
 	-- b.ds_funcao, > here we could try to connect funcao.ds_funcao to pg_stat_activity.application_name 
 	xact_start
 FROM pg_stat_activity a;
