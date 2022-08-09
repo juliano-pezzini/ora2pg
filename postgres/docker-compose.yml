@@ -12,6 +12,7 @@ services:
     volumes: 
     # after the first initialization, change the max_locks_per_transaction to 512 on ./data/postgresql.conf
       - ./data:/var/lib/postgresql/data
+      - ../project/tasy/sources/packages/global_variables.conf:/var/lib/postgresql/data/global_variables.conf
     networks:
       - br0      
 
