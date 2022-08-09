@@ -4,11 +4,8 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
-CREATE OR REPLACE FUNCTION get_valid_pfcs_function ( cd_funcao_p bigint, ie_pfcs_p text default PFCS_PCK_CONSTANTS.IE_NO, ie_main_screen_p text default PFCS_PCK_CONSTANTS.IE_NO) RETURNS varchar AS $body$
+CREATE OR REPLACE FUNCTION get_valid_pfcs_function ( cd_funcao_p bigint, ie_pfcs_p text default current_setting('PFCS_PCK_CONSTANTS.IE_NO'), ie_main_screen_p text default current_setting('PFCS_PCK_CONSTANTS.IE_NO') ) 
+RETURNS varchar AS $body$
 DECLARE
 
 
@@ -31,7 +28,7 @@ CD_FUNCTION_INFO_W                      CONSTANT FUNCAO.CD_FUNCAO%TYPE          
 CD_MENU_INFO_W                          CONSTANT FUNCAO.CD_FUNCAO%TYPE           := 6006;
 
 -- DYNAMIC VARIABLES
-ie_return_w                             varchar(1) := PFCS_PCK_CONSTANTS.IE_YES;
+ie_return_w                             varchar(1) := current_setting('PFCS_PCK_CONSTANTS.IE_YES');
 ie_table_origin_w                       pfcs_general_rule.ie_table_origin%type;
 
 
@@ -42,27 +39,27 @@ if (cd_funcao_p IS NOT NULL AND cd_funcao_p::text <> '') then
     into STRICT    ie_table_origin_w
     from    pfcs_general_rule;
 
-    if (ie_table_origin_w = PFCS_PCK_CONSTANTS.IE_TRUE or ie_pfcs_p <> PFCS_PCK_CONSTANTS.IE_NO) then -- ONLY PFCS
-        select  coalesce(max(PFCS_PCK_CONSTANTS.IE_YES),PFCS_PCK_CONSTANTS.IE_NO)
+    if (ie_table_origin_w = current_setting('PFCS_PCK_CONSTANTS.IE_TRUE')::real or ie_pfcs_p <> current_setting('PFCS_PCK_CONSTANTS.IE_NO') ) then -- ONLY PFCS
+        select  coalesce(max(current_setting('PFCS_PCK_CONSTANTS.IE_YES')),current_setting('PFCS_PCK_CONSTANTS.IE_NO') )
         into STRICT    ie_return_w
         from    funcao f,
                 pfcs_official_use o
         where   f.NR_SEQ_MODULO = CD_MODULE_CLOC_W
         and     f.cd_funcao = cd_funcao_p
         and     f.cd_funcao = o.cd_funcao
-        and ( ie_main_screen_p = PFCS_PCK_CONSTANTS.IE_NO
+        and ( ie_main_screen_p = current_setting('PFCS_PCK_CONSTANTS.IE_NO')
                     or f.cd_funcao not in (
                         SELECT distinct dyn.cd_funcao
                         from pfcs_dynamic_module dyn
-                        where dyn.cd_funcao <> PFCS_PCK_CONSTANTS.CD_FUNC_ENTERPRISE_DEMAND
+                        where dyn.cd_funcao <> current_setting('PFCS_PCK_CONSTANTS.CD_FUNC_ENTERPRISE_DEMAND')::integer
                     ) );
 
-        if (ie_return_w = PFCS_PCK_CONSTANTS.IE_NO) then
-            select  coalesce(max(PFCS_PCK_CONSTANTS.IE_YES),PFCS_PCK_CONSTANTS.IE_NO)
+        if (ie_return_w = current_setting('PFCS_PCK_CONSTANTS.IE_NO') ) then
+            select  coalesce(max(current_setting('PFCS_PCK_CONSTANTS.IE_YES') ),current_setting('PFCS_PCK_CONSTANTS.IE_NO') )
             into STRICT    ie_return_w
             from    funcao f
             where   f.cd_funcao in (
-                        PFCS_PCK_CONSTANTS.CD_FUNC_PFCS_SETTINGS,
+                        current_setting('PFCS_PCK_CONSTANTS.CD_FUNC_PFCS_SETTINGS')::integer,
                         CD_SYSTEM_MENU_W, CD_INTERNAL_COMMUNICATION_W,
                         CD_SYSTEM_PARAMETERS_W, CD_REPORT_MANAGER_W,
                         CD_LOG_ADMINISTRATION_W, CD_SO_MANAGEMENT_W,
@@ -74,17 +71,17 @@ if (cd_funcao_p IS NOT NULL AND cd_funcao_p::text <> '') then
         end if;
 
     else -- PFCS + TASY
-        select  coalesce(max(PFCS_PCK_CONSTANTS.IE_NO),PFCS_PCK_CONSTANTS.IE_YES)
+        select  coalesce(max(current_setting('PFCS_PCK_CONSTANTS.IE_NO') ),current_setting('PFCS_PCK_CONSTANTS.IE_YES') )
         into STRICT    ie_return_w
         from    funcao f
         where   f.NR_SEQ_MODULO = CD_MODULE_CLOC_W
         and     f.cd_funcao = cd_funcao_p
-        and     f.cd_funcao <> PFCS_PCK_CONSTANTS.CD_FUNC_PFCS_SETTINGS
-        and ( ie_main_screen_p = PFCS_PCK_CONSTANTS.IE_NO
+        and     f.cd_funcao <> current_setting('PFCS_PCK_CONSTANTS.CD_FUNC_PFCS_SETTINGS')::integer
+        and ( ie_main_screen_p = current_setting('PFCS_PCK_CONSTANTS.IE_NO')
                     or f.cd_funcao not in (
                         SELECT distinct dyn.cd_funcao
                         from pfcs_dynamic_module dyn
-                        where dyn.cd_funcao <> PFCS_PCK_CONSTANTS.CD_FUNC_ENTERPRISE_DEMAND
+                        where dyn.cd_funcao <> current_setting('PFCS_PCK_CONSTANTS.CD_FUNC_ENTERPRISE_DEMAND')::integer
                     ) )
         and     not exists (SELECT 1
                         from    pfcs_official_use o
