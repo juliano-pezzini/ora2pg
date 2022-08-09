@@ -4,15 +4,10 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.search_names_legacy (name text, name_type text default null) RETURNS SETOF PERSON_NAME_TABLE AS $body$
 DECLARE
-
-	
 	person_name_r	person_name_row_score := person_name_row_score(null,null,null,null,null,null,null, null);
-	name_types		split_table;
+	name_types		text[];
 	name_w			varchar(512);
 	decode_w		varchar(512);
 	c01 REFCURSOR;

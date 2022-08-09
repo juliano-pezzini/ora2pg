@@ -4,16 +4,11 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.get_formatted_person_name ( given_name text, family_name text, component_name_1 text, component_name_2 text, component_name_3 text, title_name text, format text) RETURNS varchar AS $body$
 DECLARE
-
 	bindings		varchar(2000);
 	result			varchar(2000);
 	format_w 		person_name_format.ds_format%type := format;
-
 BEGIN
 	bindings	:= bindings || current_setting('pkg_name_utils.key_given')::varchar(30) || '=' || given_name || ';';
 	bindings	:= bindings || current_setting('pkg_name_utils.key_family')::varchar(30) || '=' || family_name || ';';

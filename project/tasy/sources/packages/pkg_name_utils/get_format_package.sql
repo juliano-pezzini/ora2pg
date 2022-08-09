@@ -4,14 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.get_format (locale text, format_type text) RETURNS varchar AS $body$
 DECLARE
-
-	format		person_name_format.ds_format%type;
-
+	format		varchar(512);
 BEGIN
 	select	ds_format
 	into STRICT	format
@@ -25,7 +20,7 @@ union all
 			SELECT	ds_format
 			from	person_name_format
 			where	coalesce(ds_locale, current_setting('pkg_name_utils.default_locale')::varchar(30)) = current_setting('pkg_name_utils.default_locale')::varchar(30)
-			and		ds_type = coalesce(format_type, current_setting('pkg_name_utils.format_full')::person_name_format.ds_format%type)) alias13 LIMIT 1;
+			and		ds_type = coalesce(format_type, current_setting('pkg_name_utils.format_full')::varchar(512))) alias13 LIMIT 1;
 
 	return format;
 END;

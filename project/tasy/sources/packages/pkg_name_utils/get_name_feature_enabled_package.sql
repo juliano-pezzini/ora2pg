@@ -4,22 +4,23 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.get_name_feature_enabled () RETURNS varchar AS $body$
+DECLARE
+	raw_value text;
 BEGIN
-    IF ( current_setting('pkg_name_utils.is_name_feature_enabled')::coalesce(varchar(1)::text, '') = '' ) THEN
+	raw_value := current_setting('pkg_name_utils.is_name_feature_enabled');
+    IF (raw_value is null or raw_value = '') THEN
         BEGIN
-            PERFORM set_config('pkg_name_utils.is_name_feature_enabled', obter_valor_param_usuario(cd_funcao_p          => 0,
+			raw_value := obter_valor_param_usuario(cd_funcao_p          => 0,
                                                                  nr_sequencia_p       => 213,
                                                                  cd_perfil_p          => wheb_usuario_pck.get_cd_perfil(),
                                                                  nm_usuario_p         => wheb_usuario_pck.get_nm_usuario(),
-                                                                 cd_estabelecimento_p => wheb_usuario_pck.get_cd_estabelecimento()), false);
+                                                                 cd_estabelecimento_p => wheb_usuario_pck.get_cd_estabelecimento());
+            PERFORM set_config('pkg_name_utils.is_name_feature_enabled', raw_value, false);
 
         END;
     END IF;
-    RETURN current_setting('pkg_name_utils.is_name_feature_enabled')::varchar(1);
+    RETURN raw_value::varchar(1);
 END;
 
 
