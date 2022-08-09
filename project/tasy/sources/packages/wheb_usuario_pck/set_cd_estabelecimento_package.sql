@@ -9,7 +9,7 @@ SET client_encoding TO 'UTF8';
 
 CREATE OR REPLACE PROCEDURE wheb_usuario_pck.set_cd_estabelecimento (cd_estabelecimento_p bigint) AS $body$
 BEGIN
-		PERFORM set_config('wheb_usuario_pck.cd_estabelecimento_w', cd_estabelecimento_p, false);
+		PERFORM set_config('wheb_usuario_pck.cd_estabelecimento_w', cd_estabelecimento_p::text, false);
 		PERFORM set_config('wheb_usuario_pck.ie_desc_reduzida_w', null, false);
 	end;
 

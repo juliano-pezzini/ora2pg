@@ -4,18 +4,12 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION obter_valor_param_usuario ( cd_funcao_p bigint, nr_sequencia_p bigint, cd_perfil_p bigint, nm_usuario_p text, cd_estabelecimento_p bigint) RETURNS varchar AS $body$
 DECLARE
-
-
-vl_parametro_w	varchar(255);
+vl_parametro_w	text;
 
 BEGIN
-vl_parametro_w := Obter_Param_Usuario(cd_funcao_p, nr_sequencia_p, cd_perfil_p, nm_usuario_p, cd_estabelecimento_p, vl_parametro_w);
+call Obter_Param_Usuario(cd_funcao_p, nr_sequencia_p, cd_perfil_p, nm_usuario_p, cd_estabelecimento_p, vl_parametro_w);
 
 return vl_parametro_w;
 
@@ -23,6 +17,5 @@ END;
 $body$
 LANGUAGE PLPGSQL
 SECURITY DEFINER
- STABLE;
+ ;
 -- REVOKE ALL ON FUNCTION obter_valor_param_usuario ( cd_funcao_p bigint, nr_sequencia_p bigint, cd_perfil_p bigint, nm_usuario_p text, cd_estabelecimento_p bigint) FROM PUBLIC;
-
