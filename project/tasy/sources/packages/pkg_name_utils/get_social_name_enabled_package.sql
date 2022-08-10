@@ -1,14 +1,10 @@
--- FUNCTION: pkg_name_utils.get_social_name_enabled(bigint)
-
--- DROP FUNCTION IF EXISTS pkg_name_utils.get_social_name_enabled(bigint);
-
-CREATE OR REPLACE FUNCTION pkg_name_utils.get_social_name_enabled(
+EATE OR REPLACE FUNCTION pkg_name_utils.get_social_name_enabled(
 cd_estabelecimento_p bigint DEFAULT NULL::bigint)
     RETURNS character varying
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE SECURITY DEFINER PARALLEL UNSAFE
-AS $
+AS $BODY$
 DECLARE
 ds_key_w        varchar2(255);
 cd_estab_w      bigint;
@@ -41,7 +37,8 @@ else
 return ie_social_name_w;
 END;
 
-$;
+$BODY$;
 
 ALTER FUNCTION pkg_name_utils.get_social_name_enabled(bigint)
     OWNER TO postgres;
+

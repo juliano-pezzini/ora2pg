@@ -32,11 +32,6 @@ $BODY$;
 ALTER FUNCTION pkg_name_utils.get_person_name(text, text, text, text, text, text, text)
     OWNER TO postgres;
 
-
-TION: pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2)
-
--- DROP FUNCTION IF EXISTS pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2);
-
 CREATE OR REPLACE FUNCTION pkg_name_utils.get_person_name(
 	id bigint,
 	establishment bigint,
@@ -111,5 +106,3 @@ $BODY$;
 ALTER FUNCTION pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2)
     OWNER TO postgres;
 
-
--- REVOKE ALL ON FUNCTION pkg_name_utils.get_person_name ( given_name text, family_name text, component_name_1 text, component_name_2 text, component_name_3 text, title_name text, format text) FROM PUBLIC;
