@@ -2,18 +2,114 @@
 -- Copyright 2000-2022 Gilles DAROLD. All rights reserved.
 -- DATASOURCE: dbi:Oracle:host=srv-dbora-03.whebdc.com.br;service_name=DEV_1815;port=1521
 
+
+
+
 SET client_encoding TO 'UTF8';
+-- FUNCTION: pkg_name_utils.get_person_name(text, text, text, text, text, text, text)
 
+-- DROP FUNCTION IF EXISTS pkg_name_utils.get_person_name(text, text, text, text, text, text, text);
 
-
-
-CREATE OR REPLACE FUNCTION pkg_name_utils.get_person_name ( given_name text, family_name text, component_name_1 text, component_name_2 text, component_name_3 text, title_name text, format text) RETURNS varchar AS $body$
+CREATE OR REPLACE FUNCTION pkg_name_utils.get_person_name(
+	given_name text,
+	family_name text,
+	component_name_1 text,
+	component_name_2 text,
+	component_name_3 text,
+	title_name text,
+	format text)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE SECURITY DEFINER PARALLEL UNSAFE
+AS $BODY$
 BEGIN
 	return pkg_name_utils.get_formatted_person_name(given_name, family_name, component_name_1, component_name_2, component_name_3, title_name, format);
 END;
 
-$body$
-LANGUAGE PLPGSQL
-SECURITY DEFINER
-;
+$BODY$;
+
+ALTER FUNCTION pkg_name_utils.get_person_name(text, text, text, text, text, text, text)
+    OWNER TO postgres;
+
+
+TION: pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2)
+
+-- DROP FUNCTION IF EXISTS pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2);
+
+CREATE OR REPLACE FUNCTION pkg_name_utils.get_person_name(
+	id bigint,
+	establishment bigint,
+	format_type varchar2 DEFAULT 'full'::varchar2,
+	name_type varchar2 DEFAULT 'main'::varchar2,
+	locale varchar2 DEFAULT NULL::varchar2)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE SECURITY DEFINER PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+       format          person_name_format.ds_format%type;
+        person          pkg_name_utils.person_data;
+        locale_w        establishment_locale.ds_locale%type;
+        ds_usuario_w         usuario.ds_usuario%TYPE;
+        cd_pessoa_fisica_w   pessoa_fisica.cd_pessoa_fisica%TYPE;
+        result_w             VARCHAR2(2000);
+        nm_pessoa_fisica_w   pessoa_fisica.nm_pessoa_fisica%TYPE;
+begin
+        locale_w := locale;
+        if (locale_w is null) then
+                locale_w := pkg_name_utils.get_locale(establishment);
+        end if;
+
+        format := pkg_name_utils.get_format(locale_w, format_type);
+        person := pkg_name_utils.get_person(id, name_type);
+
+        if (person.last is null) then
+                return null;
+        end if;
+         result_w := pkg_name_utils.get_formatted_person_name(person(1), person(2), person(3), person(4), person(5),
+                          person(6), format);
+
+    if ( trim(result_w) is not null ) then
+         return result_w;
+    elsif (format = FORMAT_FULL) then
+                 BEGIN
+            SELECT
+                cd_pessoa_fisica,SUBSTR(nm_pessoa_fisica, 0, 100)
+            INTO cd_pessoa_fisica_w,nm_pessoa_fisica_w
+            FROM
+                pessoa_fisica
+            WHERE
+                nr_seq_person_name = id;
+
+            if (nm_pessoa_fisica_w IS NOT NULL)  then
+
+                                result_w := nm_pessoa_fisica_w;
+                        else
+                                SELECT ds_usuario
+                                INTO ds_usuario_w
+                                FROM
+                                        usuario
+                                WHERE
+                                        cd_pessoa_fisica = cd_pessoa_fisica_w;
+
+                                result_w := ds_usuario_w;
+                                end if;
+
+                        EXCEPTION
+                                WHEN no_data_found THEN
+                                  result_w := NULL;
+                        END;
+
+                end if;
+
+        RETURN result_w;
+end;
+$BODY$;
+
+ALTER FUNCTION pkg_name_utils.get_person_name(bigint, bigint, varchar2, varchar2, varchar2)
+    OWNER TO postgres;
+
+
 -- REVOKE ALL ON FUNCTION pkg_name_utils.get_person_name ( given_name text, family_name text, component_name_1 text, component_name_2 text, component_name_3 text, title_name text, format text) FROM PUBLIC;
