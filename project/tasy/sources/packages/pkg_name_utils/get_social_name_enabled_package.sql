@@ -1,4 +1,4 @@
-EATE OR REPLACE FUNCTION pkg_name_utils.get_social_name_enabled(
+CREATE OR REPLACE FUNCTION pkg_name_utils.get_social_name_enabled(
 cd_estabelecimento_p bigint DEFAULT NULL::bigint)
     RETURNS character varying
     LANGUAGE 'plpgsql'
