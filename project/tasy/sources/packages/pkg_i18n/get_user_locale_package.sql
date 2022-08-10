@@ -5,16 +5,21 @@
 SET client_encoding TO 'UTF8';
 
 
-
-
-CREATE OR REPLACE FUNCTION pkg_i18n.get_user_locale () RETURNS varchar AS $body$
+REATE OR REPLACE FUNCTION pkg_i18n.get_user_locale(
+	)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE SECURITY DEFINER PARALLEL UNSAFE
+AS $BODY$
 BEGIN
-return replace(coalesce(current_setting('pkg_i18n.user_locale_w')::varchar(10), get_estab_locale),'-','_');
+return replace(coalesce(current_setting('pkg_i18n.user_locale_w')::varchar(10), pkg_i18n.get_estab_locale()),'-','_');
 end;
 
+$BODY$;
 
-$body$
-LANGUAGE PLPGSQL
-SECURITY DEFINER
-;
+ALTER FUNCTION pkg_i18n.get_user_locale()
+    OWNER TO postgres;
+
+
 -- REVOKE ALL ON FUNCTION pkg_i18n.get_user_locale () FROM PUBLIC;
