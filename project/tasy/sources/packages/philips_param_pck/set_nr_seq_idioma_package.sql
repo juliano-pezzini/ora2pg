@@ -4,17 +4,17 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-CREATE OR REPLACE PROCEDURE philips_param_pck.set_nr_seq_idioma (nr_seq_idioma_p bigint) AS $body$
+CREATE OR REPLACE PROCEDURE philips_param_pck.set_nr_seq_idioma(
+	IN nr_seq_idioma_p bigint)
+LANGUAGE 'plpgsql'
+    SECURITY DEFINER 
+AS $BODY$
 BEGIN
-		PERFORM set_config('philips_param_pck.nr_seq_idioma_w', nr_seq_idioma_p, false);
+		PERFORM set_config('philips_param_pck.nr_seq_idioma_w', nr_seq_idioma_p::text, false);
 	end;
 
+$BODY$;
+ALTER PROCEDURE philips_param_pck.set_nr_seq_idioma(bigint)
+    OWNER TO postgres;
 
-$body$
-LANGUAGE PLPGSQL
-SECURITY DEFINER
-;
 -- REVOKE ALL ON PROCEDURE philips_param_pck.set_nr_seq_idioma (nr_seq_idioma_p bigint) FROM PUBLIC;
