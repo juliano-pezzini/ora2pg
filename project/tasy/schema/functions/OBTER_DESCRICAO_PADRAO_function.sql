@@ -58,22 +58,27 @@ if (nm_tabela_p IS NOT NULL AND nm_tabela_p::text <> '') and (ds_campo_p IS NOT 
 		cd_chave_w := chr(39)||cd_chave_w||chr(39);
 	end if;*/
 	ds_comando_w	:= 'select ' || ds_campo_p || ' from ' || nm_tabela_p ||
-				' where ' || ds_campo_chave_w || ' = :CD_CHAVE ';
+				' where ' || ds_campo_chave_w || '::text = $1 ';
 
-	begin
+--	begin
 
-	C001 := DBMS_SQL.OPEN_CURSOR;
-	DBMS_SQL.PARSE(C001, ds_comando_w, dbms_sql.Native);
-	dbms_sql.define_column(C001,1,cd_chave_w,255);
-	DBMS_SQL.BIND_VARIABLE(C001, 'CD_CHAVE', cd_chave_w,255);
-	retorno_w := DBMS_SQL.execute(c001);
-	retorno_w := DBMS_SQL.fetch_rows(c001);
-	DBMS_SQL.COLUMN_VALUE(C001, 1, vl_retorno_w );
-	DBMS_SQL.CLOSE_CURSOR(C001);
-	exception	
-	when others THEN
-		DBMS_SQL.CLOSE_CURSOR(C001);
-	end;
+	-- C001 := DBMS_SQL.OPEN_CURSOR;
+	-- DBMS_SQL.PARSE(C001, ds_comando_w, dbms_sql.Native);
+	-- dbms_sql.define_column(C001,1,cd_chave_w,255);
+	-- DBMS_SQL.BIND_VARIABLE(C001, 'CD_CHAVE', cd_chave_w,255);
+	-- retorno_w := DBMS_SQL.execute(c001);
+	-- retorno_w := DBMS_SQL.fetch_rows(c001);
+	-- DBMS_SQL.COLUMN_VALUE(C001, 1, vl_retorno_w );
+	-- DBMS_SQL.CLOSE_CURSOR(C001);
+
+	execute ds_comando_w
+	   into vl_retorno_w
+	  using cd_chave_w;
+
+	-- exception	
+	-- when others THEN
+	-- 	DBMS_SQL.CLOSE_CURSOR(C001);
+	-- end;
 	end;
 end if;
 
