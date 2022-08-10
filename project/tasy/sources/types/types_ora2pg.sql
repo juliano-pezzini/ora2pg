@@ -1608,3 +1608,23 @@ CREATE TYPE person_name_row_score AS (
 nr_sequencia integer, ds_given_name varchar(15), ds_component_name_1 varchar(15), ds_component_name_2 varchar(15),   ds_component_name_3 varchar(15),   ds_family_name varchar(15),   ds_type varchar(15),   nr_score integer
 );
 
+
+-- Type: person_name_row_score
+
+-- DROP TYPE IF EXISTS pkg_name_utils.person_name_row_score;
+
+CREATE TYPE pkg_name_utils.person_name_row_score AS
+(
+	nr_sequencia bigint,
+	ds_given_name varchar2(128),
+	ds_component_name_1 varchar2(128),
+	ds_component_name_2 varchar2(128),
+	ds_component_name_3 varchar2(128),
+	ds_family_name varchar2(128),
+	ds_type varchar2(15),
+	nr_score bigint
+);
+
+ALTER TYPE pkg_name_utils.person_name_row_score
+    OWNER TO postgres;
+
