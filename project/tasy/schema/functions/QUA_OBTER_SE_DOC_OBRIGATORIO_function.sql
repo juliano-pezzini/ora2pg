@@ -4,41 +4,34 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION qua_obter_se_doc_obrigatorio ( nr_sequencia_p bigint, nm_usuario_p text) RETURNS varchar AS $body$
 DECLARE
-
-
-ds_resultado_w		varchar(1);
-qt_reg_w			bigint;
-cd_cargo_w		bigint;
-cd_estabelecimento_w	smallint;
-cd_setor_atendimento_w	integer;
-cd_perfil_w		integer := obter_perfil_ativo;
-ie_libera_estab_w		varchar(1);
-cd_classif_setor_w		varchar(02);
-nr_seq_superior_w		varchar(10);
-ie_doc_pai_w		varchar(1);
-nr_seq_doc_w		bigint;
-ds_program_w		varchar(60);
-
+  ds_resultado_w		varchar(1);
+  qt_reg_w			bigint;
+  cd_cargo_w		bigint;
+  cd_estabelecimento_w	smallint;
+  cd_setor_atendimento_w	integer;
+  cd_perfil_w		integer := obter_perfil_ativo();
+  ie_libera_estab_w		varchar(1);
+  cd_classif_setor_w		varchar(02);
+  nr_seq_superior_w		varchar(10);
+  ie_doc_pai_w		varchar(1);
+  nr_seq_doc_w		bigint;
+  ds_program_w		varchar(60);
 
 BEGIN
 
-begin
-    $IF DBMS_DB_VERSION.VERSION <= 11 $THEN
-      select max(program)
-      into STRICT ds_program_w
-      from gv$session where audsid = userenv('sessionid');
-    $ELSE
-      SELECT SYS_CONTEXT('USERENV', 'CLIENT_PROGRAM_NAME')
-      into STRICT ds_program_w
-;
-    $END
-end;
+-- begin
+--     $IF DBMS_DB_VERSION.VERSION <= 11 $THEN
+--       select max(program)
+--       into STRICT ds_program_w
+--       from gv$session where audsid = userenv('sessionid');
+--     $ELSE
+--       SELECT SYS_CONTEXT('USERENV', 'CLIENT_PROGRAM_NAME')
+--       into STRICT ds_program_w
+-- ;
+--     $END
+-- end;
 
 if (position('.EXE' in ds_program_w) > 0) then
 	return 'S';

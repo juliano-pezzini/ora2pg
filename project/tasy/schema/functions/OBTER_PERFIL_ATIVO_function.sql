@@ -4,21 +4,14 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION obter_perfil_ativo () RETURNS bigint AS $body$
 DECLARE
-
-
-ds_module_w 		varchar(255);
-cd_perfil_w    	bigint;
-
+  ds_module_w 		varchar(255);
+  cd_perfil_w    	bigint;
 
 BEGIN
 
-cd_perfil_w		:= somente_numero(wheb_usuario_pck.get_cd_perfil);
+cd_perfil_w		:= wheb_usuario_pck.get_cd_perfil();
 
 RETURN cd_perfil_w;
 
