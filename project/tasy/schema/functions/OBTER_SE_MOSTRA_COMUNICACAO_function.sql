@@ -4,14 +4,8 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION obter_se_mostra_comunicacao ( nr_sequencia_p bigint, nm_usuario_p text, ie_lida_p text, ie_gerencial_p text, nr_seq_classif_p bigint, nm_usuario_orig_p text, nm_usuario_destino_1_p text, nm_usuario_destino_2_p text, ie_geral_p text, ie_gerencial_parametro_p text, cd_perfil_p bigint, nr_seq_classif_parametro_p bigint, ds_perfil_adicional_1_p text, ds_perfil_adicional_2_p text, ds_setor_adicional_p text, cd_setor_destino_p bigint, cd_estab_destino_p bigint, ds_grupo_p text, nm_usuario_oculto_p text, ds_grupo_perfil_p text, ds_usuarios_ocultos_p text, ie_estab_lib_usuario_p text, ds_estab_adicional_p text, cd_especialidade_p bigint, cd_cargo_p bigint, cd_perfil_origem_p bigint, ie_envio_terceiro_p text, ie_funcionario_p text) RETURNS varchar AS $body$
 DECLARE
-
- 
 ie_mostra_w		varchar(001)	:= 'S';
 nr_seq_regra_w		bigint;
 nm_usuario_w		varchar(15);
@@ -63,8 +57,6 @@ ie_funcionario_w	varchar(1);
 C01 CURSOR FOR 
 	SELECT	cd_perfil_destino, 
 		nm_usuario_destino 
-	into STRICT	cd_perfil_destino_w, 
-		nm_usuario_destino_w 
 	from	regra_mostra_comunicacao 
 	where	((nr_seq_classif_comunic = nr_seq_classif_w) or (coalesce(nr_seq_classif_comunic::text, '') = '')) 
 	and	((cd_perfil_origem = cd_perfil_origem_w) or (coalesce(cd_perfil_origem::text, '') = '')) 
@@ -74,9 +66,9 @@ C01 CURSOR FOR
 BEGIN 
 /*Coelho 01/04/2009 - OS133231*/
  
-cd_setor_ww		:= wheb_usuario_pck.get_cd_setor_atendimento;
-cd_estab_logado_w 	:= wheb_usuario_pck.get_cd_estabelecimento;
-cd_perfil_logado_w	:= obter_perfil_ativo;
+cd_setor_ww		:= wheb_usuario_pck.get_cd_setor_atendimento();
+cd_estab_logado_w 	:= wheb_usuario_pck.get_cd_estabelecimento();
+cd_perfil_logado_w	:= obter_perfil_ativo();
  
 nm_usuario_w		:= nm_usuario_orig_p;
 ie_geral_w		:= coalesce(ie_geral_p,'N');
@@ -547,6 +539,6 @@ end;
 $body$
 LANGUAGE PLPGSQL
 SECURITY DEFINER
- STABLE;
+ VOLATILE;
 -- REVOKE ALL ON FUNCTION obter_se_mostra_comunicacao ( nr_sequencia_p bigint, nm_usuario_p text, ie_lida_p text, ie_gerencial_p text, nr_seq_classif_p bigint, nm_usuario_orig_p text, nm_usuario_destino_1_p text, nm_usuario_destino_2_p text, ie_geral_p text, ie_gerencial_parametro_p text, cd_perfil_p bigint, nr_seq_classif_parametro_p bigint, ds_perfil_adicional_1_p text, ds_perfil_adicional_2_p text, ds_setor_adicional_p text, cd_setor_destino_p bigint, cd_estab_destino_p bigint, ds_grupo_p text, nm_usuario_oculto_p text, ds_grupo_perfil_p text, ds_usuarios_ocultos_p text, ie_estab_lib_usuario_p text, ds_estab_adicional_p text, cd_especialidade_p bigint, cd_cargo_p bigint, cd_perfil_origem_p bigint, ie_envio_terceiro_p text, ie_funcionario_p text) FROM PUBLIC;
 

@@ -4,13 +4,10 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE PROCEDURE wheb_usuario_pck.set_cd_setor_atendimento (cd_setor_p bigint) AS $body$
 BEGIN
-		PERFORM set_config('wheb_usuario_pck.cd_setor_atendimento_w', cd_setor_p, false);
-	end;
+  PERFORM set_config('wheb_usuario_pck.cd_setor_atendimento_w', cd_setor_p::text, false);
+end;
 
 
 $body$

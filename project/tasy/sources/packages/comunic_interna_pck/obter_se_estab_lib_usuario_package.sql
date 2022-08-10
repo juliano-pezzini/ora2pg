@@ -4,38 +4,29 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION comunic_interna_pck.obter_se_estab_lib_usuario (cd_estab_p bigint) RETURNS varchar AS $body$
 DECLARE
-
-ie_achou_w varchar(1) :='N';
+  ie_achou_w varchar(1) :='N';
+  estabelecimentos_usuario_w integer[];
 BEGIN
 
-
-
-if (current_setting('comunic_interna_pck.cd_estabelecimento_atual_w')::estabelecimento.cd_estabelecimento%type <> coalesce(current_setting('comunic_interna_pck.cd_estabelecimento_ant_w')::estabelecimento.cd_estabelecimento%type,0)) then
-	PERFORM set_config('comunic_interna_pck.ie_carregar_estab_adic_w', true, false);
-
-	if (current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::Vetor.count <> 0) then
-		current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::Vetor.delete;
-	end if;
-
+if (current_setting('comunic_interna_pck.cd_estabelecimento_atual_w') <> coalesce(current_setting('comunic_interna_pck.cd_estabelecimento_ant_w'),'0')) then
+	PERFORM set_config('comunic_interna_pck.ie_carregar_estab_adic_w', 'true', false);
+  PERFORM set_config('comunic_interna_pck.estabelecimentos_usuario_w', '', false);
 end if;
 
-
-if ( current_setting('comunic_interna_pck.ie_carregar_estab_adic_w')::boolean ) and ( current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::Vetor.count = 0 ) then
-	CALL CALL comunic_interna_pck.carregar_estab_usuario();
-	PERFORM set_config('comunic_interna_pck.ie_carregar_estab_adic_w', false, false);
+if ( current_setting('comunic_interna_pck.ie_carregar_estab_adic_w') = 'true' ) and ( current_setting('comunic_interna_pck.estabelecimentos_usuario_w') = '' ) then
+	CALL comunic_interna_pck.carregar_estab_usuario();
+	PERFORM set_config('comunic_interna_pck.ie_carregar_estab_adic_w', 'false', false);
 end if;
 
-for j in 1..estabelecimentos_usuario_w.count loop
-	if (current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::Vetor[j].cd_estabelecimento = cd_estab_p) then
-		ie_achou_w := 'S';
-	end if;
-end loop;
-return ie_achou_w;
+if current_setting('comunic_interna_pck.estabelecimentos_usuario_w') = '' then
+  return 'N';
+end if;
+
+estabelecimentos_usuario_w := current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::integer[];
+
+return cd_estab_p = any(estabelecimentos_usuario_w);
 end;
 
 

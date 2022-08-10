@@ -4,49 +4,38 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE PROCEDURE comunic_interna_pck.carregar_estab_usuario () AS $body$
 DECLARE
-
-
-i 			smallint := 1;
-C01			integer;
-ds_comando_w		varchar(2000);
-retorno_w		integer;
-cd_estabelecimento_w 	smallint;
-
-
+  i 			smallint := 1;
+  C01			integer;
+  ds_comando_w		varchar(2000);
+  retorno_w		integer;
+  cd_estabelecimento_w 	integer[];
+  nm_usuario_w text;
 BEGIN
 
-ds_comando_w	:=	' SELECT	cd_estabelecimento ' ||
-			' FROM		usuario ' ||
-			' WHERE		nm_usuario = :nm_usuario ' ||
-			' UNION ' ||
-			' SELECT	cd_estabelecimento ' ||
-			' FROM		usuario_estabelecimento ' ||
-			' WHERE		nm_usuario_param = :nm_usuario ';
+  nm_usuario_w := current_setting('comunic_interna_pck.nm_usuario_w');
 
-C01		:= DBMS_SQL.OPEN_CURSOR;
-DBMS_SQL.PARSE(C01, ds_comando_w, dbms_sql.Native);
-DBMS_SQL.DEFINE_COLUMN(c01,1,cd_estabelecimento_w);
-DBMS_SQL.BIND_VARIABLE(c01,'NM_USUARIO', current_setting('comunic_interna_pck.nm_usuario_w')::usuario.nm_usuario%type,15);
-retorno_w	:= DBMS_SQL.execute(c01);
+select ARRAY_AGG(estabs.cd_estabelecimento)
+into cd_estabelecimento_w
+from (
+      SELECT	cd_estabelecimento 
+			 FROM		usuario 
+			 WHERE		nm_usuario = nm_usuario_w 
+			 UNION 
+			 SELECT	cd_estabelecimento 
+			 FROM		usuario_estabelecimento 
+			 WHERE		nm_usuario_param = nm_usuario_w 
+	) estabs
+       ;
 
-while( DBMS_SQL.FETCH_ROWS(C01) > 0 ) loop
-	DBMS_SQL.COLUMN_VALUE(C01, 1, cd_estabelecimento_w);
-	current_setting('comunic_interna_pck.estabelecimentos_usuario_w')::Vetor[i].cd_estabelecimento	:= cd_estabelecimento_w;
-	i	:= i + 1;
-END LOOP;
-
-DBMS_SQL.CLOSE_CURSOR(C01);
+	perform set_config('comunic_interna_pck.estabelecimentos_usuario_w', cd_estabelecimento_w::text, false);
 
 /* Após recarregar os dados, seta o estabelecimento para que não precise atualizar */
 
 /* até que seja mudado de estabelecimento novamente */
 
-PERFORM set_config('comunic_interna_pck.cd_estabelecimento_ant_w', current_setting('comunic_interna_pck.cd_estabelecimento_atual_w')::estabelecimento.cd_estabelecimento%type, false);
+PERFORM set_config('comunic_interna_pck.cd_estabelecimento_ant_w', current_setting('comunic_interna_pck.cd_estabelecimento_atual_w'), false);
 
 end;
 
