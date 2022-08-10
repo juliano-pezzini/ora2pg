@@ -5,20 +5,13 @@
 SET client_encoding TO 'UTF8';
 
 
-
-
-
 CREATE OR REPLACE FUNCTION obter_usuario_ativo () RETURNS varchar AS $body$
 DECLARE
-
-
-
 nm_usuario_w	varchar(255);
-
 
 BEGIN
 
-nm_usuario_w	:= wheb_usuario_pck.get_nm_usuario;
+nm_usuario_w	:= wheb_usuario_pck.get_nm_usuario();
 
 return	nm_usuario_w;
 
