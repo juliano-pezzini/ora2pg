@@ -4,26 +4,25 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE PROCEDURE wheb_usuario_pck.set_informacoes_usuario ( cd_funcao_p bigint, cd_perfil_p bigint, cd_estabelecimento_p bigint, cd_setor_atendimento_p bigint, nm_usuario_p text, nr_seq_idioma_p bigint, ds_form_p text, nm_maquina_p text, cd_maquina_ip_p text) AS $body$
 BEGIN
-		if ( cd_estabelecimento_p 	<> coalesce(current_setting('wheb_usuario_pck.cd_estabelecimento_w')::smallint,0) ) or ( cd_perfil_p		<> coalesce(current_setting('wheb_usuario_pck.cd_perfil_w')::bigint,0)) then
+		if ( (current_setting('wheb_usuario_pck.cd_estabelecimento_w') = '') or 
+         (current_setting('wheb_usuario_pck.cd_estabelecimento_w') = 'NULL') or 
+         (current_setting('wheb_usuario_pck.cd_estabelecimento_w') is null) or 
+         (cd_estabelecimento_p <> coalesce(current_setting('wheb_usuario_pck.cd_estabelecimento_w')::smallint,0) )) or 
+         ( cd_perfil_p		<> coalesce(current_setting('wheb_usuario_pck.cd_perfil_w')::bigint,0)) then
 			PERFORM set_config('wheb_usuario_pck.ie_desc_reduzida_w', null, false);
 		end if;
-		PERFORM set_config('wheb_usuario_pck.cd_funcao_w', cd_funcao_p, false);
-		PERFORM set_config('wheb_usuario_pck.cd_perfil_w', cd_perfil_p, false);
-		PERFORM set_config('wheb_usuario_pck.cd_estabelecimento_w', cd_estabelecimento_p, false);
-		PERFORM set_config('wheb_usuario_pck.cd_setor_atendimento_w', cd_setor_atendimento_p, false);
-		PERFORM set_config('wheb_usuario_pck.nm_usuario_w', nm_usuario_p, false);
-		PERFORM set_config('wheb_usuario_pck.nr_seq_idioma_w', nr_seq_idioma_p, false);
-		PERFORM set_config('wheb_usuario_pck.ds_form_w', ds_form_p, false);
-		PERFORM set_config('wheb_usuario_pck.nm_maquina_w', nm_maquina_p, false);
-		PERFORM set_config('wheb_usuario_pck.cd_maquina_ip_w', cd_maquina_ip_p, false);
+		PERFORM set_config('wheb_usuario_pck.cd_funcao_w', cd_funcao_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.cd_perfil_w', cd_perfil_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.cd_estabelecimento_w', cd_estabelecimento_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.cd_setor_atendimento_w', cd_setor_atendimento_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.nm_usuario_w', nm_usuario_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.nr_seq_idioma_w', nr_seq_idioma_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.ds_form_w', ds_form_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.nm_maquina_w', nm_maquina_p::text, false);
+		PERFORM set_config('wheb_usuario_pck.cd_maquina_ip_w', cd_maquina_ip_p::text, false);
 	end;
-
-
 
 $body$
 LANGUAGE PLPGSQL
