@@ -16,8 +16,8 @@ CREATE OR REPLACE VIEW traceability_customer_data_v (ie_production, ds_environme
 						b.ds_environment,
 						b.dt_atualizacao
 				 from	tasy_customer_environment b
-				 where	b.nm_database = SYS_CONTEXT('USERENV', 'DB_NAME')
-				 and	b.ds_server_host = SYS_CONTEXT('USERENV', 'SERVER_HOST')
+				 where	b.nm_database = current_database() 
+				 and	b.ds_server_host = inet_server_addr()::text
 				 order by b.dt_atualizacao desc) tce LIMIT 1)
 	select	lce.ie_production,
 			lce.ds_environment,
