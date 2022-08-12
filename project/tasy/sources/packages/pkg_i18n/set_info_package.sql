@@ -4,22 +4,19 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE PROCEDURE pkg_i18n.set_info ( user_locale text, user_language text, user_calendar text, user_secondary_calendar text, user_timezone text, estab_first_week_day bigint, estab_locale text, estab_calendar text, estab_secondary_calendar text, estab_timezone text, estab_currency text default null) AS $body$
 BEGIN
-PERFORM set_config('pkg_i18n.user_locale_w', user_locale, false);
-PERFORM set_config('pkg_i18n.user_language_w', user_language, false);
-PERFORM set_config('pkg_i18n.user_calendar_w', user_calendar, false);
-PERFORM set_config('pkg_i18n.user_secondary_calendar_w', user_secondary_calendar, false);
-PERFORM set_config('pkg_i18n.user_timezone_w', user_timezone, false);
-PERFORM set_config('pkg_i18n.estab_first_week_day_w', estab_first_week_day, false);
-PERFORM set_config('pkg_i18n.estab_locale_w', estab_locale, false);
-PERFORM set_config('pkg_i18n.estab_calendar_w', estab_calendar, false);
-PERFORM set_config('pkg_i18n.estab_secondary_calendar_w', estab_secondary_calendar, false);
-PERFORM set_config('pkg_i18n.estab_timezone_w', estab_timezone, false);
-PERFORM set_config('pkg_i18n.estab_currency_w', estab_currency, false);
+  PERFORM set_config('pkg_i18n.user_locale_w', user_locale, false);
+  PERFORM set_config('pkg_i18n.user_language_w', user_language, false);
+  PERFORM set_config('pkg_i18n.user_calendar_w', user_calendar, false);
+  PERFORM set_config('pkg_i18n.user_secondary_calendar_w', user_secondary_calendar, false);
+  PERFORM set_config('pkg_i18n.user_timezone_w', user_timezone, false);
+  PERFORM set_config('pkg_i18n.estab_first_week_day_w', estab_first_week_day::text, false);
+  PERFORM set_config('pkg_i18n.estab_locale_w', estab_locale, false);
+  PERFORM set_config('pkg_i18n.estab_calendar_w', estab_calendar, false);
+  PERFORM set_config('pkg_i18n.estab_secondary_calendar_w', estab_secondary_calendar, false);
+  PERFORM set_config('pkg_i18n.estab_timezone_w', estab_timezone, false);
+  PERFORM set_config('pkg_i18n.estab_currency_w', estab_currency, false);
 end;
 
 $body$
