@@ -4,27 +4,20 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION retorna_locale_i18n () RETURNS bigint AS $body$
 DECLARE
-
-
-ds_locale_w 	varchar(15);
-nr_locale_w	bigint;
+  ds_locale_w 	varchar(15);
+  nr_locale_w	bigint;
 
 BEGIN
+  ds_locale_w := coalesce(pkg_i18n.get_user_locale(), 'pt_BR');
 
-ds_locale_w := coalesce(pkg_i18n.get_user_locale, 'pt_BR');
+  select	nr_sequencia
+  into STRICT	nr_locale_w
+  from 	tasy_idioma
+  where	ds_language_tag = ds_locale_w;
 
-select	nr_sequencia
-into STRICT	nr_locale_w
-from 	tasy_idioma
-where	ds_language_tag = ds_locale_w;
-
-return	coalesce(nr_locale_w, 0);
+  return	coalesce(nr_locale_w, 0);
 
 end;
 $body$

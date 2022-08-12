@@ -4,12 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION philips_param_pck.get_cd_pais () RETURNS bigint AS $body$
 BEGIN
-		return current_setting('philips_param_pck.cd_pais_w')::integer;
+		return current_setting('philips_param_pck.cd_pais_w',true)::integer;
 	end;
 
 

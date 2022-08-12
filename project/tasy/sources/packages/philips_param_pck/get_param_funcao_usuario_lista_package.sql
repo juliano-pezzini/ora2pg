@@ -4,14 +4,8 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION philips_param_pck.get_param_funcao_usuario_lista ( cd_funcao_p bigint, cd_perfil_p bigint, nm_usuario_p text, cd_estabelecimento_p bigint, ds_Lista_Param_p text) RETURNS varchar AS $body$
 DECLARE
-
-
-
 	ds_lista_param_w		varchar(32000);
 	vl_parametro_w		varchar(4000);
 	nr_sequencia_w		bigint;
@@ -20,15 +14,15 @@ DECLARE
 	
 BEGIN
 	PERFORM set_config('philips_param_pck.vl_parametros_w', null, false);
+
 	SELECT 	coalesce(max(NR_SEQUENCIA),0)
 	into STRICT	nr_seq_max_w
 	FROM 	FUNCAO_PARAMETRO
 	WHERE 	CD_FUNCAO = cd_funcao_p;
 
-
 	ds_lista_param_w	:= ds_Lista_Param_p;
 	i	:= 0;
-	current_setting('philips_param_pck.vetor_w')::Vetor.delete;
+	perform set_config('philips_param_pck.vetor_w', null, false);
 	while(length(ds_lista_param_w) > 0) loop
 		begin
 		i	:= i+1;
@@ -62,11 +56,11 @@ BEGIN
 			vl_parametro_w	:= '';
 		end if;
 
-		PERFORM set_config('philips_param_pck.vl_parametros_w', current_setting('philips_param_pck.vl_parametros_w')::varchar(32000) || vl_parametro_w || '#@', false);
+		PERFORM set_config('philips_param_pck.vl_parametros_w', current_setting('philips_param_pck.vl_parametros_w',true)::varchar(32000) || vl_parametro_w || '#@', false);
 		end;
 	END LOOP;
 
-	return current_setting('philips_param_pck.vl_parametros_w')::varchar(32000);
+	return current_setting('philips_param_pck.vl_parametros_w',true)::varchar(32000);
 
 	end;
 

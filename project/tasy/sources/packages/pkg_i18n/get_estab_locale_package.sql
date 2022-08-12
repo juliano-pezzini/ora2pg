@@ -4,29 +4,26 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION pkg_i18n.get_estab_locale () RETURNS varchar AS $body$
 BEGIN
-if (current_setting('pkg_i18n.estab_locale_w')::coalesce(varchar(10)::text, '') = '') then
-	-- O parametro ja foi descontinuado, porem eh mantido aqui por compatibilidade com clientes que nao possuem locale de estabelecimento configurado.
-	if (philips_param_pck.get_cd_pais() = 1) then --- Portugues - Brasil
-		PERFORM set_config('pkg_i18n.estab_locale_w', 'pt_BR', false);
-	elsif (philips_param_pck.get_cd_pais() = 2) then --- Espanhol - Mexico
-		PERFORM set_config('pkg_i18n.estab_locale_w', 'es_MX', false);
-	elsif (philips_param_pck.get_cd_pais() = 8) then --- Arabe
-		PERFORM set_config('pkg_i18n.estab_locale_w', 'ar_SA', false);
-	elsif (philips_param_pck.get_cd_pais() = 9) then --- Australia
-		PERFORM set_config('pkg_i18n.estab_locale_w', 'en_AU', false);
-	end if;
-end if;
+  if (current_setting('pkg_i18n.estab_locale_w',true) = '') then
+    -- O parametro ja foi descontinuado, porem eh mantido aqui por compatibilidade com clientes que nao possuem locale de estabelecimento configurado.
+    if (philips_param_pck.get_cd_pais() = 1) then --- Portugues - Brasil
+      PERFORM set_config('pkg_i18n.estab_locale_w', 'pt_BR', false);
+    elsif (philips_param_pck.get_cd_pais() = 2) then --- Espanhol - Mexico
+      PERFORM set_config('pkg_i18n.estab_locale_w', 'es_MX', false);
+    elsif (philips_param_pck.get_cd_pais() = 8) then --- Arabe
+      PERFORM set_config('pkg_i18n.estab_locale_w', 'ar_SA', false);
+    elsif (philips_param_pck.get_cd_pais() = 9) then --- Australia
+      PERFORM set_config('pkg_i18n.estab_locale_w', 'en_AU', false);
+    end if;
+  end if;
 
-if (philips_param_pck.get_cd_pais() = 3) then --- Colombia
-		PERFORM set_config('pkg_i18n.estab_locale_w', 'es_CO', false);
-end if;
+  if (philips_param_pck.get_cd_pais() = 3) then --- Colombia
+      PERFORM set_config('pkg_i18n.estab_locale_w', 'es_CO', false);
+  end if;
 
-return replace(coalesce(current_setting('pkg_i18n.estab_locale_w')::varchar(10), current_setting('pkg_i18n.default_locale')::user_locale.ds_locale%type),'-','_');
+  return replace(coalesce(current_setting('pkg_i18n.estab_locale_w',true)::varchar(10), current_setting('pkg_i18n.default_locale')),'-','_');
 end;
 
 

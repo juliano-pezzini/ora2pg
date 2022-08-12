@@ -9,7 +9,7 @@ SET client_encoding TO 'UTF8';
 
 CREATE OR REPLACE FUNCTION philips_param_pck.get_ds_locale () RETURNS varchar AS $body$
 BEGIN
-		return current_setting('philips_param_pck.ds_locale_w')::varchar(10);
+		return current_setting('philips_param_pck.ds_locale_w',true)::varchar(10);
 	end;
 
 

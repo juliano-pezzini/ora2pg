@@ -5,7 +5,7 @@
 SET client_encoding TO 'UTF8';
 
 
-REATE OR REPLACE FUNCTION pkg_i18n.get_user_locale(
+CREATE OR REPLACE FUNCTION pkg_i18n.get_user_locale(
 	)
     RETURNS character varying
     LANGUAGE 'plpgsql'
@@ -13,7 +13,7 @@ REATE OR REPLACE FUNCTION pkg_i18n.get_user_locale(
     VOLATILE SECURITY DEFINER PARALLEL UNSAFE
 AS $BODY$
 BEGIN
-return replace(coalesce(current_setting('pkg_i18n.user_locale_w')::varchar(10), pkg_i18n.get_estab_locale()),'-','_');
+return replace(coalesce(current_setting('pkg_i18n.user_locale_w',true)::varchar(10), pkg_i18n.get_estab_locale()),'-','_');
 end;
 
 $BODY$;

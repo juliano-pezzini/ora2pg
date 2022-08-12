@@ -9,7 +9,7 @@ SET client_encoding TO 'UTF8';
 
 CREATE OR REPLACE FUNCTION philips_param_pck.get_param_funcao_usuario (vl_index_p bigint) RETURNS varchar AS $body$
 BEGIN
-		return	substr(current_setting('philips_param_pck.ds_parametro_w')::varchar(32000),(vl_index_p * 4000)+1,4000);
+		return	substr(current_setting('philips_param_pck.ds_parametro_w',true)::varchar(32000),(vl_index_p * 4000)+1,4000);
 	end;
 
 

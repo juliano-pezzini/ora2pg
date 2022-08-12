@@ -4,13 +4,15 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION billing_i18n_pck.obter_se_proc_alfanumerico () RETURNS varchar AS $body$
 BEGIN
-
-    if retorna_locale_i18n in (current_setting('billing_i18n_pck.locale_co_w')::bigint,current_setting('billing_i18n_pck.locale_de_w')::bigint,current_setting('billing_i18n_pck.locale_at_w')::bigint,current_setting('billing_i18n_pck.locale_au_w')::bigint,current_setting('billing_i18n_pck.locale_all_w')::bigint,current_setting('billing_i18n_pck.locale_bo_w')::bigint,current_setting('billing_i18n_pck.locale_ar_w')::bigint) then
+    if retorna_locale_i18n() in (current_setting('billing_i18n_pck.locale_co_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_de_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_at_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_au_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_all_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_bo_w')::bigint,
+                               current_setting('billing_i18n_pck.locale_ar_w')::bigint) then
       return 'S';
     else
       return 'N';
