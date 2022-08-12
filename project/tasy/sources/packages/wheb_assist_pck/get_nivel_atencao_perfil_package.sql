@@ -4,41 +4,37 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION wheb_assist_pck.get_nivel_atencao_perfil () RETURNS varchar AS $body$
 DECLARE
-
 		cd_perfil_atencao_w bigint;
-	
+    ie_nivel_atencao_perfil_w text;
 BEGIN
-		select	obter_perfil_ativo
+		select	obter_perfil_ativo()
 		into STRICT	cd_perfil_atencao_w
 		;
 		
-		if (current_setting('wheb_assist_pck.cd_perfil_nivel_atencao_w')::coalesce(bigint::text, '') = '' or current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::coalesce(varchar(1)::text, '') = '' or current_setting('wheb_assist_pck.cd_perfil_nivel_atencao_w')::bigint <> cd_perfil_atencao_w) then
+		if (current_setting('wheb_assist_pck.cd_perfil_nivel_atencao_w',true) = '' or 
+        current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w',true) = '' or 
+        current_setting('wheb_assist_pck.cd_perfil_nivel_atencao_w',true) <> cd_perfil_atencao_w::text) then
 			select	coalesce(max(a.ie_nivel_atencao),'T')
-			into STRICT	current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::varchar(1) 
+			into STRICT	ie_nivel_atencao_perfil_w
 			from	perfil a
 			where	a.cd_perfil = cd_perfil_atencao_w;
-			PERFORM set_config('wheb_assist_pck.cd_perfil_nivel_atencao_w', cd_perfil_atencao_w, false);
-		else
-			
-			if (obter_funcao_ativa = 381) /* Prontuario Eletronico de Paciente Ambulatorial - PEPA */
- then
-				return coalesce(get_nivel_atencao_pepa, current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::varchar(1));
+      PERFORM set_config('wheb_assist_pck.ie_nivel_atencao_perfil_w', ie_nivel_atencao_perfil_w, false);
+			PERFORM set_config('wheb_assist_pck.cd_perfil_nivel_atencao_w', cd_perfil_atencao_w::text, false);
+		else			
+			if (obter_funcao_ativa() = 381) /* Prontuario Eletronico de Paciente Ambulatorial - PEPA */ then 
+				return coalesce(get_nivel_atencao_pepa(), current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w',true)::varchar(1));
 			else
-				return  current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::varchar(1);
+				return  current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w',true)::varchar(1);
 			end if;
 			
 		end if;
 			
-		if (obter_funcao_ativa = 381) /* Prontuario Eletronico de Paciente Ambulatorial - PEPA */
- then
-			return coalesce(get_nivel_atencao_pepa, current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::varchar(1));
+		if (obter_funcao_ativa() = 381) /* Prontuario Eletronico de Paciente Ambulatorial - PEPA */ then 
+			return coalesce(get_nivel_atencao_pepa(), current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w',true)::varchar(1));
 		else
-			return  current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w')::varchar(1);
+			return  current_setting('wheb_assist_pck.ie_nivel_atencao_perfil_w',true)::varchar(1);
 		end if;
 		
 	end;
