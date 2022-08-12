@@ -4,12 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION wheb_usuario_pck.get_cd_especialidade () RETURNS bigint AS $body$
 BEGIN
-		return current_setting('wheb_usuario_pck.cd_especialidade_w')::integer;
+		return coalesce(current_setting('wheb_usuario_pck.cd_especialidade_w',true),'0')::integer;
 	end;
 
 

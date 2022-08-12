@@ -4,20 +4,12 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
 CREATE OR REPLACE FUNCTION obter_funcao_ativa () RETURNS bigint AS $body$
 DECLARE
-
-
-cd_funcao_w    		integer;
-
-
+  cd_funcao_w    		integer;
 BEGIN
 
-cd_funcao_w := wheb_usuario_pck.get_cd_funcao;
+cd_funcao_w := wheb_usuario_pck.get_cd_funcao();
 
 RETURN cd_funcao_w;
 

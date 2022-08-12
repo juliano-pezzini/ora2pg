@@ -4,12 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION wheb_usuario_pck.get_cd_maquina_ip () RETURNS varchar AS $body$
 BEGIN
-	   return current_setting('wheb_usuario_pck.cd_maquina_ip_w')::varchar(255);
+	   return coalesce(current_setting('wheb_usuario_pck.cd_maquina_ip_w', true),'')::varchar(255);
 	end;
 
 

@@ -4,12 +4,9 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
 CREATE OR REPLACE FUNCTION wheb_usuario_pck.get_cd_perfil () RETURNS bigint AS $body$
 BEGIN
-		return current_setting('wheb_usuario_pck.cd_perfil_w')::bigint;
+		return coalesce(current_setting('wheb_usuario_pck.cd_perfil_w', true),'0')::bigint;
 	end;
 
 
