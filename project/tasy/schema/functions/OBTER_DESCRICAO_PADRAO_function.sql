@@ -5,6 +5,28 @@
 SET client_encoding TO 'UTF8';
 
 
+-- FUNCTION: public.obter_descricao_padrao(text, text, text)
+
+-- DROP FUNCTION IF EXISTS public.obter_descricao_padrao(text, text, text);
+
+CREATE OR REPLACE FUNCTION public.obter_descricao_padrao(
+	nm_tabela_p text,
+	ds_campo_p text,
+	cd_chave_p numeric)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    STABLE SECURITY DEFINER PARALLEL UNSAFE
+AS $BODY$
+
+BEGIN
+
+RETURN obter_descricao_padrao(nm_tabela_p, ds_campo_p, cd_chave_p::text);
+END;
+$BODY$;
+
+ALTER FUNCTION public.obter_descricao_padrao(text, text, numeric)
+    OWNER TO postgres;
 
 
 

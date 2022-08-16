@@ -71,3 +71,31 @@ SECURITY DEFINER
  STABLE;
 -- REVOKE ALL ON FUNCTION obter_se_exibir_fun_html5_tasy ( ie_base_wheb_p text, cd_estabelecimento_p text, cd_funcao_p bigint, ie_situacao_funcao_p text, ie_situacao_java_p text, ie_versao_utilizacao_p text default 'D', ie_utilitarios_p text default 'N') FROM PUBLIC;
 
+
+
+
+
+
+CREATE OR REPLACE FUNCTION public.obter_se_exibir_fun_html5_tasy(
+	ie_base_wheb_p bigint,
+	cd_estabelecimento_p bigint,
+	cd_funcao_p bigint,
+	ie_situacao_funcao_p text,
+	ie_situacao_java_p text,
+	ie_versao_utilizacao_p text DEFAULT 'D'::text,
+	ie_utilitarios_p text DEFAULT 'N'::text)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    STABLE SECURITY DEFINER PARALLEL UNSAFE
+AS $BODY$
+begin
+return obter_se_exibir_fun_html5_tasy(ie_base_wheb_p::text, cd_estabelecimento_p::text, cd_funcao_p, ie_situacao_funcao_p,
+              ie_situacao_java_p,          ie_versao_utilizacao_p,           ie_utilitarios_p);    
+
+end;
+$BODY$;
+
+ALTER FUNCTION public.obter_se_exibir_fun_html5_tasy(bigint, bigint, bigint, text, text, text, text)
+    OWNER TO postgres;
+
