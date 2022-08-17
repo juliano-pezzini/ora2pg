@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:14.1-alpine
+   # image: postgres:14.1-alpine
+    image: docker.na1.hsdp.io/client-cci-platform_cci-platform-dev/postgresql-custom:1.0.1
     restart: always
     environment:
       - POSTGRES_USER=postgres

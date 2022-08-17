@@ -8,7 +8,7 @@ SET client_encoding TO 'UTF8';
 
 
 
-CREATE OR REPLACE PROCEDURE calcular_caboplanina ( nr_seq_paciente_p bigint, qt_peso_p bigint, qt_altura_p bigint, qt_porcent_reducao_p bigint, qt_creatinina_p bigint, ie_unid_med_p bigint, auc_p bigint, qt_clearance_p INOUT bigint, qt_carboplatina_p INOUT bigint) AS $body$
+CREATE OR REPLACE PROCEDURE calcular_caboplanina ( nr_seq_paciente_p bigint, qt_peso_p numeric, qt_altura_p integer, qt_porcent_reducao_p numeric, qt_creatinina_p numeric, ie_unid_med_p integer, auc_p numeric, qt_clearance_p INOUT numeric, qt_carboplatina_p INOUT numeric) AS $body$
 DECLARE
 
  
@@ -45,7 +45,7 @@ C03 CURSOR FOR
  
 
 BEGIN 
-ie_calcular_carboplanina_w	:= Obter_Valor_Param_Usuario(281, 485, Obter_perfil_Ativo, Wheb_Usuario_Pck.Get_nm_Usuario, wheb_usuario_pck.get_cd_estabelecimento);
+ie_calcular_carboplanina_w	:= Obter_Valor_Param_Usuario(281, 485, Obter_perfil_Ativo(), Wheb_Usuario_Pck.Get_nm_Usuario(), wheb_usuario_pck.get_cd_estabelecimento());
 qt_carboplatina_p	:= 0;
  
 select	cd_pessoa_fisica, 
@@ -123,7 +123,7 @@ FETCH C02 into
 	EXIT WHEN NOT FOUND; /* apply on c02 */
  
 	if (qt_peso_p > 0) then 
-    qt_superf_corporal_w := round(obter_superficie_corp_red_ped(qt_peso_p, qt_altura_p,qt_porcent_reducao_p, cd_pessoa_fisica_w, obter_usuario_ativo, ie_formula_sc_w),obter_numero_casas_sc);
+    qt_superf_corporal_w := round(obter_superficie_corp_red_ped(qt_peso_p, qt_altura_p,qt_porcent_reducao_p, cd_pessoa_fisica_w, obter_usuario_ativo(), ie_formula_sc_w),obter_numero_casas_sc());
 		update	paciente_atendimento 
 		set	qt_superf_corporal	= qt_superf_corporal_w 
 		where	nr_seq_atendimento	= nr_seq_atendimento_w;	
