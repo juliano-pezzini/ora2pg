@@ -4,16 +4,10 @@
 
 SET client_encoding TO 'UTF8';
 
-
-
-
-
-CREATE OR REPLACE FUNCTION dividir ( Dividendo_p bigint, Divisor_p bigint) RETURNS bigint AS $body$
+CREATE OR REPLACE FUNCTION dividir ( Dividendo_p numeric, Divisor_p double precision) RETURNS bigint AS $body$
 DECLARE
 
-
 Resultado_w		double precision;
-
 
 BEGIN
 if (coalesce(divisor_p,0) = 0) then
@@ -28,4 +22,3 @@ LANGUAGE PLPGSQL
 SECURITY DEFINER
  IMMUTABLE;
 -- REVOKE ALL ON FUNCTION dividir ( Dividendo_p bigint, Divisor_p bigint) FROM PUBLIC;
-

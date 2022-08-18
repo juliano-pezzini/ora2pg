@@ -5,12 +5,12 @@
 SET client_encoding TO 'UTF8';
 
 create or replace function obter_unid_med_usua(ie_unidade_med_inter_p	varchar)
- 		    	return varchar as $body$
+ 		    	returns varchar as $body$
 
 DECLARE           
 
-cd_unidade_medida_w	varchar2(30);
-qt_existe_w		number(10);
+cd_unidade_medida_w	varchar(30);
+qt_existe_w		numeric(10);
 
 begin
 
@@ -36,8 +36,6 @@ end if;
 
 
 return	nvl(cd_unidade_medida_w,ie_unidade_med_inter_p);
-
-end obter_unid_med_usua;
 
 end;
 $body$

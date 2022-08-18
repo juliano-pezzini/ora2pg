@@ -8,7 +8,7 @@ SET client_encoding TO 'UTF8';
 
 
 
-CREATE OR REPLACE FUNCTION obter_conversao_ml ( cd_material_p bigint, qt_dose_p numeric, cd_unid_med_p text, ie_divisao_sem_round text default 'N') RETURNS numeric AS $body$
+CREATE OR REPLACE FUNCTION obter_conversao_ml ( cd_material_p bigint, qt_dose_p numeric, cd_unid_med_p text, ie_divisao_sem_round text default 'N') RETURNS bigint AS $body$
 DECLARE
 
 
@@ -25,7 +25,7 @@ cd_unidade_medida_w	:= upper(cd_unid_med_p);
 if (cd_unidade_medida_w = upper(obter_unid_med_usua('ML'))) then
 	qt_retorno_w	:= qt_dose_p;
 else
-	cd_unid_med_cons_w	:= upper(substr(obter_dados_material_estab(cd_material_p, wheb_usuario_pck.get_cd_estabelecimento, 'UMS'),1,30));
+	cd_unid_med_cons_w	:= upper(substr(obter_dados_material_estab(cd_material_p, wheb_usuario_pck.get_cd_estabelecimento(), 'UMS'),1,30));
 
 	if (cd_unidade_medida_w = cd_unid_med_cons_w) then
 		qt_retorno_w	:= qt_dose_p;
@@ -59,5 +59,6 @@ $body$
 LANGUAGE PLPGSQL
 SECURITY DEFINER
  STABLE;
+
 -- REVOKE ALL ON FUNCTION obter_conversao_ml ( cd_material_p bigint, qt_dose_p bigint, cd_unid_med_p text, ie_divisao_sem_round text default 'N') FROM PUBLIC;
 

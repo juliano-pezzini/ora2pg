@@ -145,11 +145,11 @@ end;
             sql_w := 'CALL OBTER_RET_DADOS_MAT_ESTAB_MD(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15, :16,
                       :17, :18, :19, :20, :21, :22, :23, :24) INTO :ds_retorno_w';
             EXECUTE sql_w
-                USING IN ie_tipo_dado_p, IN cd_material_p, IN nr_registro_anvisa_w, IN ie_classif_custo_w,
-                      IN cd_material_conta_w, IN ie_requisicao_w, IN qt_consumo_mensal_w, IN dt_validade_reg_anvisa_w, IN nr_protocolo_anvisa_w, 
-                      IN dt_validade_prot_anvisa_w, IN cd_unidade_medida_compra_w, IN cd_unidade_medida_estoque_w, IN cd_unidade_medida_consumo_w, IN cd_sistema_ant_w, 
-                      IN qt_conv_compra_estoque_w, IN qt_conv_estoque_consumo_w, IN nr_minimo_cotacao_w, IN cd_kit_material_w, IN ie_prescricao_w, 
-                      IN ie_tipo_consignado_w, IN ie_padronizado_w, IN ie_baixa_estoque_w, IN ie_permite_prescrever_w, IN ie_vigente_anvisa_w, 
+                USING ie_tipo_dado_p, cd_material_p, nr_registro_anvisa_w, ie_classif_custo_w,
+                      cd_material_conta_w, ie_requisicao_w, qt_consumo_mensal_w, dt_validade_reg_anvisa_w, nr_protocolo_anvisa_w, 
+                      dt_validade_prot_anvisa_w, cd_unidade_medida_compra_w, cd_unidade_medida_estoque_w, cd_unidade_medida_consumo_w, cd_sistema_ant_w, 
+                      qt_conv_compra_estoque_w, qt_conv_estoque_consumo_w, nr_minimo_cotacao_w, cd_kit_material_w, ie_prescricao_w, 
+                      ie_tipo_consignado_w, ie_padronizado_w, ie_baixa_estoque_w, ie_permite_prescrever_w, ie_vigente_anvisa_w, 
                       OUT ds_retorno_w;
 
         EXCEPTION
