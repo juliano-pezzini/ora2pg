@@ -4,3 +4,44 @@
 
 SET client_encoding TO 'UTF8';
 
+create or replace function obter_unid_med_usua(ie_unidade_med_inter_p	varchar)
+ 		    	return varchar as $body$
+
+DECLARE           
+
+cd_unidade_medida_w	varchar2(30);
+qt_existe_w		number(10);
+
+begin
+
+select	max(cd_unidade_medida)
+into	cd_unidade_medida_w
+from 	unidade_medida
+where  	upper(ie_unidade_med_inter)  = upper(ie_unidade_med_inter_p)
+and 	nvl(ie_situacao,'A') = 'A';
+
+if  ('ML' = upper(ie_unidade_med_inter_p)) and
+	(cd_unidade_medida_w is null) then
+
+	select	count(cd_unidade_medida)
+	into	qt_existe_w
+	from	unidade_medida
+	where	cd_unidade_medida = upper(ie_unidade_med_inter_p)
+	and 	nvl(ie_situacao,'A') = 'A';
+
+	if	(qt_existe_w > 0 ) then
+		cd_unidade_medida_w := 'ML';
+	end if;
+end if;
+
+
+return	nvl(cd_unidade_medida_w,ie_unidade_med_inter_p);
+
+end obter_unid_med_usua;
+
+end;
+$body$
+LANGUAGE PLPGSQL
+SECURITY DEFINER
+ STABLE;
+-- REVOKE ALL ON FUNCTION obter_unid_med_usua(ie_unidade_med_inter_p	varchar) FROM PUBLIC;

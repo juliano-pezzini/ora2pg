@@ -8,7 +8,7 @@ SET client_encoding TO 'UTF8';
 
 
 
-CREATE OR REPLACE FUNCTION obter_conversao_ml ( cd_material_p bigint, qt_dose_p bigint, cd_unid_med_p text, ie_divisao_sem_round text default 'N') RETURNS bigint AS $body$
+CREATE OR REPLACE FUNCTION obter_conversao_ml ( cd_material_p bigint, qt_dose_p numeric, cd_unid_med_p text, ie_divisao_sem_round text default 'N') RETURNS numeric AS $body$
 DECLARE
 
 

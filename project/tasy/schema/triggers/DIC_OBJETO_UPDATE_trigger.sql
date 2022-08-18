@@ -10,10 +10,9 @@ declare
 ds_user_w varchar(100);
 
 BEGIN
-select max(USERNAME)
- into STRICT ds_user_w
- from v$session
- where  audsid = (SELECT userenv('sessionid') );
+select current_user
+ into ds_user_w;
+
 if (ds_user_w = 'TASY') then
 
 if (NEW.ie_tipo_objeto = 'P') and (NEW.ds_texto <> OLD.ds_texto) then
