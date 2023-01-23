@@ -35,6 +35,7 @@ LABEL maintainer="postgres.ai"
 COPY --from=build-env /usr/local/bin/wal-g /usr/local/bin/wal-g
 COPY instantclient-sdk-linux.x64-11.2.0.4.0.zip /tmp
 COPY instantclient-basic-linux.x64-11.2.0.4.0.zip /tmp
+COPY plv8-3.1.4.zip /tmp 
 
 ARG PG_SERVER_VERSION
 ENV PG_SERVER_VERSION=${PG_SERVER_VERSION:-14}
@@ -156,6 +157,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/partial \
     && apt-get install -y libevent-dev libbrotli-dev \
       && git clone https://github.com/CyberDem0n/bg_mon.git && cd bg_mon \
       && USE_PGXS=1 make && USE_PGXS=1 make install && cd .. \
+    && apt-get install -y postgresql-14-plpgsql-check \
     # pgextwlist extension
     #&& apt-get install --no-install-recommends -y \
     #   postgresql-${PG_SERVER_VERSION}-pgextwlist \
@@ -175,7 +177,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/partial \
        && chown postgres:postgres /var/lib/postgresql/.ssh \
     # remove all auxilary packages to reduce final image size
     
-    && cd /tmp/ && unzip -e /tmp/instantclient-sdk-linux.x64-11.2.0.4.0.zip && unzip -e instantclient-basic-linux.x64-11.2.0.4.0.zip \
+    && cd /tmp/ && unzip -e /tmp/plv8-3.1.4.zip && rm /tmp/plv8-3.1.4.zip && mv /tmp/plv8-3.1.4.so /usr/lib/postgresql/14/lib/plv8-3.1.4.so \
+    && cp /tmp/plv8* /usr/share/postgresql/14/extension/ \
+    && unzip -e /tmp/instantclient-sdk-linux.x64-11.2.0.4.0.zip && unzip -e instantclient-basic-linux.x64-11.2.0.4.0.zip \
     &&  mkdir /tmp/instantclient_11_2/lib && cp /tmp/instantclient_11_2/libclntsh.so.11.1 /tmp/instantclient_11_2/lib/libclntsh.so   \
     &&  git clone https://github.com/laurenz/oracle_fdw && cd oracle_fdw && ORACLE_HOME=/tmp/instantclient_11_2/ make && make install \
     && cp /tmp/instantclient_11_2/libclntsh.so.11.1 /usr/lib/x86_64-linux-gnu \
@@ -195,7 +199,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/partial \
     # remove standard pgdata
     && rm -rf /var/lib/postgresql/${PG_SERVER_VERSION}/ \
     && rm -rf /tmp/instantclient*
-
 
 EXPOSE 5432
 
